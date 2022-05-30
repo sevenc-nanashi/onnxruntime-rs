@@ -119,6 +119,11 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          sudo: false
+        if: matrix.os == 'windows-2022'
       - uses: Swatinem/rust-cache@v1
         with:
           key: "cargo-test-cache-${{ matrix.os }}-${{ env.CARGO_CACHE_VERSION }}"
