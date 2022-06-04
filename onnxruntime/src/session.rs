@@ -191,7 +191,7 @@ impl<'a> SessionBuilder<'a> {
 
     /// Download an ONNX pre-trained model from the [ONNX Model Zoo](https://github.com/onnx/models) and commit the session
     #[cfg(feature = "model-fetching")]
-    pub fn with_model_downloaded<M>(self, model: M) -> Result<Session>
+    pub fn with_model_downloaded<M>(self, model: M) -> Result<Session<'a>>
     where
         M: Into<AvailableOnnxModel>,
     {
@@ -209,7 +209,7 @@ impl<'a> SessionBuilder<'a> {
     //       See all OrtApi methods taking a `options: *mut OrtSessionOptions`.
 
     /// Load an ONNX graph from a file and commit the session
-    pub fn with_model_from_file<P>(self, model_filepath_ref: P) -> Result<Session>
+    pub fn with_model_from_file<P>(self, model_filepath_ref: P) -> Result<Session<'a>>
     where
         P: AsRef<Path> + 'a,
     {
@@ -275,18 +275,19 @@ impl<'a> SessionBuilder<'a> {
             memory_info,
             inputs,
             outputs,
+            environment: self.env,
         })
     }
 
     /// Load an ONNX graph from memory and commit the session
-    pub fn with_model_from_memory<B>(self, model_bytes: B) -> Result<Session>
+    pub fn with_model_from_memory<B>(self, model_bytes: B) -> Result<Session<'a>>
     where
         B: AsRef<[u8]>,
     {
         self.with_model_from_memory_monomorphized(model_bytes.as_ref())
     }
 
-    fn with_model_from_memory_monomorphized(self, model_bytes: &[u8]) -> Result<Session> {
+    fn with_model_from_memory_monomorphized(self, model_bytes: &[u8]) -> Result<Session<'a>> {
         let mut session_ptr: *mut sys::OrtSession = std::ptr::null_mut();
 
         let env_ptr: *const sys::OrtEnv = self.env.env_ptr();
@@ -330,13 +331,14 @@ impl<'a> SessionBuilder<'a> {
             memory_info,
             inputs,
             outputs,
+            environment: self.env,
         })
     }
 }
 
 /// Type storing the session information, built from an [`Environment`](environment/struct.Environment.html)
 #[derive(Debug)]
-pub struct Session {
+pub struct Session<'a> {
     session_ptr: *mut sys::OrtSession,
     allocator_ptr: *mut sys::OrtAllocator,
     memory_info: MemoryInfo,
@@ -344,6 +346,9 @@ pub struct Session {
     pub inputs: Vec<Input>,
     /// Information about the ONNX's outputs as stored in loaded file
     pub outputs: Vec<Output>,
+
+    #[allow(dead_code)]
+    environment: &'a Environment,
 }
 
 /// Information about an ONNX's input as stored in loaded file
@@ -394,7 +399,7 @@ impl Output {
     }
 }
 
-impl<'a> Drop for Session {
+impl<'a> Drop for Session<'a> {
     #[tracing::instrument]
     fn drop(&mut self) {
         debug!("Dropping the session.");
@@ -410,7 +415,7 @@ impl<'a> Drop for Session {
     }
 }
 
-impl Session {
+impl<'a> Session<'a> {
     /// Run the input data through the ONNX graph, performing inference.
     ///
     /// Note that ONNX models can have multiple inputs; a `Vec<_>` is thus
