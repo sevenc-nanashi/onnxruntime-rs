@@ -644,9 +644,6 @@ unsafe fn get_tensor_dimensions(
     let mut num_dims = 0;
     let status = g_ort().GetDimensionsCount.unwrap()(tensor_info_ptr, &mut num_dims);
     status_to_result(status).map_err(OrtError::GetDimensionsCount)?;
-    (num_dims != 0)
-        .then(|| ())
-        .ok_or(OrtError::InvalidDimensions)?;
 
     let mut node_dims: Vec<i64> = vec![0; num_dims as usize];
     let status = g_ort().GetDimensions.unwrap()(
