@@ -321,6 +321,11 @@ impl OnnxPrebuiltArchive for Triplet {
             | (Os::Windows, Architecture::Arm, Accelerator::None)
             | (Os::Windows, Architecture::Arm64, Accelerator::None)
             | (Os::Linux, Architecture::X86_64, Accelerator::None) => {
+                panic!(
+                    "env is {}-{}",
+                    self.os.as_onnx_str(),
+                    self.arch.as_onnx_str()
+                );
                 Cow::from(format!("{}-{}", self.os.as_onnx_str(), "x64"))
             }
             (Os::MacOs, Architecture::X86_64, Accelerator::None) => Cow::from(format!(
