@@ -41,6 +41,8 @@ fn main() {
 
 #[cfg(not(feature = "disable-sys-build-script"))]
 fn main() {
+    use std::collections::HashSet;
+
     let libort_install_dir = prepare_libort_dir();
 
     let include_dir = libort_install_dir.join("include");
@@ -49,8 +51,24 @@ fn main() {
     println!("Include directory: {:?}", include_dir);
     println!("Lib directory: {:?}", lib_dir);
 
+    let mut file_name_set = HashSet::new();
+    for entry in fs::read_dir(&lib_dir).unwrap() {
+        let entry = entry.unwrap();
+        if entry.file_type().unwrap().is_file() {
+            let path = entry.path();
+            if matches!(
+                path.extension().unwrap().to_str().unwrap(),
+                "lib" | "dylib" | "dll" | "so"
+            ) {
+                let base_file_name = path.file_stem().unwrap().to_str().unwrap();
+                file_name_set.insert(base_file_name.to_string());
+            }
+        }
+    }
     // Tell cargo to tell rustc to link onnxruntime shared library.
-    println!("cargo:rustc-link-lib=onnxruntime");
+    for base_file_name in file_name_set.iter() {
+        println!("cargo:rustc-link-lib={}", base_file_name);
+    }
     println!("cargo:rustc-link-search=native={}", lib_dir.display());
 
     println!("cargo:rerun-if-env-changed={}", ORT_ENV_STRATEGY);
@@ -321,11 +339,6 @@ impl OnnxPrebuiltArchive for Triplet {
             | (Os::Windows, Architecture::Arm, Accelerator::None)
             | (Os::Windows, Architecture::Arm64, Accelerator::None)
             | (Os::Linux, Architecture::X86_64, Accelerator::None) => {
-                panic!(
-                    "env is {}-{}",
-                    self.os.as_onnx_str(),
-                    self.arch.as_onnx_str()
-                );
                 Cow::from(format!("{}-{}", self.os.as_onnx_str(), "x64"))
             }
             (Os::MacOs, Architecture::X86_64, Accelerator::None) => Cow::from(format!(
