@@ -32,7 +32,7 @@ use crate::{
     memory::MemoryInfo,
     tensor::{
         ort_owned_tensor::{OrtOwnedTensor, OrtOwnedTensorExtractor},
-        OrtTensor,
+        ort_tensor::OrtValuePtr,
     },
     AllocatorType, CudaProviderOptions, ExecutionMode, GraphOptimizationLevel, MemType,
     TensorElementDataType, TypeToTensorElementDataType,
@@ -399,6 +399,67 @@ impl Output {
     }
 }
 
+/// Implemented type AnyArray for ndarray.
+#[derive(Debug)]
+pub struct NdArray<A: TypeToTensorElementDataType + Debug, D: ndarray::Dimension>(Array<A, D>);
+
+impl<A: TypeToTensorElementDataType + Debug, D: ndarray::Dimension> NdArray<A, D> {
+    /// new NdArray
+    pub fn new(array: Array<A, D>) -> NdArray<A, D> {
+        NdArray(array)
+    }
+}
+
+impl<A: TypeToTensorElementDataType + Debug, D: ndarray::Dimension> From<NdArray<A, D>>
+    for Array<A, D>
+{
+    fn from(nd_array: NdArray<A, D>) -> Self {
+        nd_array.0
+    }
+}
+
+impl<A: TypeToTensorElementDataType + Debug, D: ndarray::Dimension> AnyArray for NdArray<A, D> {
+    fn shape(&self) -> &[usize] {
+        self.0.shape()
+    }
+    fn data_byte_len(&self) -> usize {
+        self.0.len() * std::mem::size_of::<A>()
+    }
+    fn data_type(&self) -> TensorElementDataType {
+        A::tensor_element_data_type()
+    }
+
+    fn as_mut_void_ptr(&mut self) -> *mut std::ffi::c_void {
+        self.0.as_mut_ptr() as *mut std::ffi::c_void
+    }
+    fn to_null_terminated_strings(&self) -> Result<Vec<std::ffi::CString>> {
+        self.0
+            .iter()
+            .map(|elt| {
+                let slice = elt
+                    .try_utf8_bytes()
+                    .expect("String data type must provide utf8 bytes");
+                std::ffi::CString::new(slice)
+            })
+            .collect::<std::result::Result<Vec<_>, _>>()
+            .map_err(OrtError::CStringNulError)
+    }
+}
+
+/// Provide any array types.
+pub trait AnyArray: Debug {
+    /// Provide shape feature.
+    fn shape(&self) -> &[usize];
+    /// Provide data length as bytes.
+    fn data_byte_len(&self) -> usize;
+    /// Provide data type as TensorElementDataType.
+    fn data_type(&self) -> TensorElementDataType;
+    /// Provide as mut void ptr.
+    fn as_mut_void_ptr(&mut self) -> *mut std::ffi::c_void;
+    /// Provide to_null_terminated_strings
+    fn to_null_terminated_strings(&self) -> Result<Vec<std::ffi::CString>>;
+}
+
 impl<'a> Drop for Session<'a> {
     #[tracing::instrument]
     fn drop(&mut self) {
@@ -420,14 +481,12 @@ impl<'a> Session<'a> {
     ///
     /// Note that ONNX models can have multiple inputs; a `Vec<_>` is thus
     /// used for the input data here.
-    pub fn run<'s, 't, 'm, TIn, TOut, D>(
+    pub fn run<'s, 't, 'm, TOut>(
         &'s mut self,
-        input_arrays: Vec<Array<TIn, D>>,
+        input_arrays: Vec<&mut dyn AnyArray>,
     ) -> Result<Vec<OrtOwnedTensor<'t, 'm, TOut, ndarray::IxDyn>>>
     where
-        TIn: TypeToTensorElementDataType + Debug + Clone,
         TOut: TypeToTensorElementDataType + Debug + Clone,
-        D: ndarray::Dimension,
         'm: 't, // 'm outlives 't (memory info outlives tensor)
         's: 'm, // 's outlives 'm (session outlives memory info)
     {
@@ -458,12 +517,12 @@ impl<'a> Session<'a> {
             vec![std::ptr::null_mut(); self.outputs.len()];
 
         // The C API expects pointers for the arrays (pointers to C-arrays)
-        let input_ort_tensors: Vec<OrtTensor<TIn, D>> = input_arrays
+        let input_ort_tensors: Vec<OrtValuePtr> = input_arrays
             .into_iter()
             .map(|input_array| {
-                OrtTensor::from_array(&self.memory_info, self.allocator_ptr, input_array)
+                OrtValuePtr::from_array(&self.memory_info, self.allocator_ptr, input_array)
             })
-            .collect::<Result<Vec<OrtTensor<TIn, D>>>>()?;
+            .collect::<Result<Vec<OrtValuePtr>>>()?;
         let input_ort_values: Vec<*const sys::OrtValue> = input_ort_tensors
             .iter()
             .map(|input_array_ort| input_array_ort.c_ptr as *const sys::OrtValue)
@@ -527,11 +586,7 @@ impl<'a> Session<'a> {
     //     Tensor::from_array(self, array)
     // }
 
-    fn validate_input_shapes<TIn, D>(&mut self, input_arrays: &[Array<TIn, D>]) -> Result<()>
-    where
-        TIn: TypeToTensorElementDataType + Debug + Clone,
-        D: ndarray::Dimension,
-    {
+    fn validate_input_shapes(&mut self, input_arrays: &[&mut dyn AnyArray]) -> Result<()> {
         // ******************************************************************
         // FIXME: Properly handle errors here
         // Make sure all dimensions match (except dynamic ones)
