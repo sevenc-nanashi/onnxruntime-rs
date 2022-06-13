@@ -1,8 +1,11 @@
 #![forbid(unsafe_code)]
 
 use onnxruntime::{
-    environment::Environment, ndarray::Array, tensor::OrtOwnedTensor, GraphOptimizationLevel,
-    LoggingLevel,
+    environment::Environment,
+    ndarray::Array,
+    session::{AnyArray, NdArray},
+    tensor::OrtOwnedTensor,
+    GraphOptimizationLevel, LoggingLevel,
 };
 use tracing::Level;
 use tracing_subscriber::FmtSubscriber;
@@ -59,7 +62,8 @@ fn run() -> Result<(), Error> {
     let array = Array::linspace(0.0_f32, 1.0, n as usize)
         .into_shape(input0_shape)
         .unwrap();
-    let input_tensor_values = vec![array];
+    let mut nd_array = NdArray::new(array);
+    let input_tensor_values: Vec<&mut dyn AnyArray> = vec![&mut nd_array];
 
     let outputs: Vec<OrtOwnedTensor<f32, _>> = session.run(input_tensor_values)?;
 

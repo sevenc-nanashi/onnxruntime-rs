@@ -90,7 +90,7 @@ to download.
 //!
 //! ```no_run
 //! # use std::error::Error;
-//! # use onnxruntime::{environment::Environment, LoggingLevel, GraphOptimizationLevel, tensor::OrtOwnedTensor};
+//! # use onnxruntime::{environment::Environment, LoggingLevel, GraphOptimizationLevel, tensor::OrtOwnedTensor, session::{AnyArray, NdArray}};
 //! # fn main() -> Result<(), Box<dyn Error>> {
 //! # let environment = Environment::builder()
 //! #     .with_name("test")
@@ -101,9 +101,9 @@ to download.
 //! #     .with_optimization_level(GraphOptimizationLevel::Basic)?
 //! #     .with_intra_op_num_threads(1)?
 //! #     .with_model_from_file("squeezenet.onnx")?;
-//! let array = ndarray::Array::linspace(0.0_f32, 1.0, 100);
+//! let mut array = NdArray::new(ndarray::Array::linspace(0.0_f32, 1.0, 100));
 //! // Multiple inputs and outputs are possible
-//! let input_tensor = vec![array];
+//! let input_tensor:Vec<&mut dyn AnyArray> = vec![&mut array];
 //! let outputs: Vec<OrtOwnedTensor<f32,_>> = session.run(input_tensor)?;
 //! # Ok(())
 //! # }
@@ -355,7 +355,7 @@ impl From<GraphOptimizationLevel> for sys::GraphOptimizationLevel {
 // FIXME: Use https://docs.rs/bindgen/0.54.1/bindgen/struct.Builder.html#method.rustified_enum
 // FIXME: Add tests to cover the commented out types
 /// Enum mapping ONNX Runtime's supported tensor types
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 #[cfg_attr(not(windows), repr(u32))]
 #[cfg_attr(windows, repr(i32))]
 pub enum TensorElementDataType {

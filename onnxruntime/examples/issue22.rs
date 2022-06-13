@@ -4,7 +4,9 @@
 //! https://drive.google.com/file/d/1FmL-Wpm06V-8wgRqvV3Skey_X98Ue4D_/view?usp=sharing
 
 use ndarray::Array2;
-use onnxruntime::{environment::Environment, tensor::OrtOwnedTensor, GraphOptimizationLevel};
+use onnxruntime::{
+    environment::Environment, session::NdArray, tensor::OrtOwnedTensor, GraphOptimizationLevel,
+};
 use tracing::Level;
 use tracing_subscriber::FmtSubscriber;
 
@@ -31,10 +33,12 @@ fn main() {
     println!("{:#?}", session.inputs);
     println!("{:#?}", session.outputs);
 
-    let input_ids = Array2::<i64>::from_shape_vec((1, 3), vec![1, 2, 3]).unwrap();
-    let attention_mask = Array2::<i64>::from_shape_vec((1, 3), vec![1, 1, 1]).unwrap();
+    let mut input_ids = NdArray::new(Array2::<i64>::from_shape_vec((1, 3), vec![1, 2, 3]).unwrap());
+    let mut attention_mask =
+        NdArray::new(Array2::<i64>::from_shape_vec((1, 3), vec![1, 1, 1]).unwrap());
 
-    let outputs: Vec<OrtOwnedTensor<f32, _>> =
-        session.run(vec![input_ids, attention_mask]).unwrap();
+    let outputs: Vec<OrtOwnedTensor<f32, _>> = session
+        .run(vec![&mut input_ids, &mut attention_mask])
+        .unwrap();
     print!("outputs: {:#?}", outputs);
 }
