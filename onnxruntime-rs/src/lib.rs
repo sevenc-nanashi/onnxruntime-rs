@@ -27,7 +27,7 @@
 //!
 //! ```no_run
 //! # use std::error::Error;
-//! # use onnxruntime::{environment::Environment, LoggingLevel};
+//! # use onnxruntime_rs::{environment::Environment, LoggingLevel};
 //! # fn main() -> Result<(), Box<dyn Error>> {
 //! let environment = Environment::builder()
 //!     .with_name("test")
@@ -41,7 +41,7 @@
 //!
 //! ```no_run
 //! # use std::error::Error;
-//! # use onnxruntime::{environment::Environment, LoggingLevel, GraphOptimizationLevel};
+//! # use onnxruntime_rs::{environment::Environment, LoggingLevel, GraphOptimizationLevel};
 //! # fn main() -> Result<(), Box<dyn Error>> {
 //! # let environment = Environment::builder()
 //! #     .with_name("test")
@@ -66,7 +66,7 @@ a model can be fetched directly from the [ONNX Model Zoo](https://github.com/onn
 
 ```no_run
 # use std::error::Error;
-# use onnxruntime::{environment::Environment, download::vision::ImageClassification, LoggingLevel, GraphOptimizationLevel};
+# use onnxruntime_rs::{environment::Environment, download::vision::ImageClassification, LoggingLevel, GraphOptimizationLevel};
 # fn main() -> Result<(), Box<dyn Error>> {
 # let environment = Environment::builder()
 #     .with_name("test")
@@ -90,7 +90,7 @@ to download.
 //!
 //! ```no_run
 //! # use std::error::Error;
-//! # use onnxruntime::{environment::Environment, LoggingLevel, GraphOptimizationLevel, tensor::OrtOwnedTensor, session::{AnyArray, NdArray}};
+//! # use onnxruntime_rs::{environment::Environment, LoggingLevel, GraphOptimizationLevel, tensor::OrtOwnedTensor, session::{AnyArray, NdArray}};
 //! # fn main() -> Result<(), Box<dyn Error>> {
 //! # let environment = Environment::builder()
 //! #     .with_name("test")

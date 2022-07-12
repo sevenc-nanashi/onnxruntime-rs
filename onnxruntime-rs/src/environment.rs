@@ -48,7 +48,7 @@ struct EnvironmentSingleton {
 ///
 /// ```no_run
 /// # use std::error::Error;
-/// # use onnxruntime::{environment::Environment, LoggingLevel};
+/// # use onnxruntime_rs::{environment::Environment, LoggingLevel};
 /// # fn main() -> Result<(), Box<dyn Error>> {
 /// let environment = Environment::builder()
 ///     .with_name("test")

@@ -1,5 +1,5 @@
 //! Display the input and output structure of an ONNX model.
-use onnxruntime::environment;
+use onnxruntime_rs::environment;
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -11,12 +11,12 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let environment = environment::Environment::builder()
         .with_name("onnx metadata")
-        .with_log_level(onnxruntime::LoggingLevel::Verbose)
+        .with_log_level(onnxruntime_rs::LoggingLevel::Verbose)
         .build()?;
 
     let session = environment
         .new_session_builder()?
-        .with_optimization_level(onnxruntime::GraphOptimizationLevel::Basic)?
+        .with_optimization_level(onnxruntime_rs::GraphOptimizationLevel::Basic)?
         .with_model_from_file(path)?;
 
     println!("Inputs:");

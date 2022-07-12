@@ -3,9 +3,9 @@
 # source .venv/bin/activate
 # python ./issue22.py
 
-import onnxruntime # v1.2.0
+import onnxruntime_rs # v1.2.0
 
-session = onnxruntime.InferenceSession("model.onnx")
+session = onnxruntime_rs.InferenceSession("model.onnx")
 
 print("Inputs:")
 for idx, inputs in enumerate(session.get_inputs()):

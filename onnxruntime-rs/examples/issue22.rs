@@ -4,7 +4,7 @@
 //! https://drive.google.com/file/d/1FmL-Wpm06V-8wgRqvV3Skey_X98Ue4D_/view?usp=sharing
 
 use ndarray::Array2;
-use onnxruntime::{
+use onnxruntime_rs::{
     environment::Environment, session::NdArray, tensor::OrtOwnedTensor, GraphOptimizationLevel,
 };
 use tracing::Level;

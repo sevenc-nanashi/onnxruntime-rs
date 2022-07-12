@@ -1,5 +1,2 @@
 [workspace]
-members = [
-    "onnxruntime-sys",
-    "onnxruntime",
-]
+members = ["onnxruntime-sys", "onnxruntime-rs"]

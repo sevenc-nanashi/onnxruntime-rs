@@ -1,7 +1,7 @@
 [package]
 authors = ["Nicolas Bigaouette <nbigaouette@gmail.com>"]
 edition = "2018"
-name = "onnxruntime"
+name = "onnxruntime-rs"
 version = "0.0.24"
 
 description = "Wrapper around Microsoft's ONNX Runtime"

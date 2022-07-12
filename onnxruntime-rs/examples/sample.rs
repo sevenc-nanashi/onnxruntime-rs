@@ -1,6 +1,6 @@
 #![forbid(unsafe_code)]
 
-use onnxruntime::{
+use onnxruntime_rs::{
     environment::Environment,
     ndarray::Array,
     session::{AnyArray, NdArray},

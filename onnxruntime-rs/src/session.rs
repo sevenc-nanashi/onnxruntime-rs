@@ -56,7 +56,7 @@ use crate::{download::AvailableOnnxModel, error::OrtDownloadError};
 ///
 /// ```no_run
 /// # use std::error::Error;
-/// # use onnxruntime::{environment::Environment, LoggingLevel, GraphOptimizationLevel};
+/// # use onnxruntime_rs::{environment::Environment, LoggingLevel, GraphOptimizationLevel};
 /// # fn main() -> Result<(), Box<dyn Error>> {
 /// let environment = Environment::builder()
 ///     .with_name("test")
