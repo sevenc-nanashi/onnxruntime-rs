@@ -310,20 +310,14 @@ struct Triplet {
 impl OnnxPrebuiltArchive for Triplet {
     fn as_onnx_str(&self) -> Cow<str> {
         match (&self.os, &self.arch, &self.accelerator) {
-            // onnxruntime-win-x86-1.8.1.zip
-            // onnxruntime-win-x64-1.8.1.zip
-            // onnxruntime-win-arm-1.8.1.zip
-            // onnxruntime-win-arm64-1.8.1.zip
-            // onnxruntime-linux-x64-1.8.1.tgz
-            // onnxruntime-osx-x64-1.8.1.tgz
-            (Os::Windows, Architecture::X86, Accelerator::None)
-            | (Os::Windows, Architecture::X86_64, Accelerator::None)
+            (Os::Windows, Architecture::X86_64, Accelerator::None)
             | (Os::Windows, Architecture::Arm, Accelerator::None)
             | (Os::Windows, Architecture::Arm64, Accelerator::None)
             | (Os::Linux, Architecture::X86_64, Accelerator::None) => {
                 Cow::from(format!("{}-{}", self.os.as_onnx_str(), "x64"))
             }
-            (Os::MacOs, Architecture::X86_64, Accelerator::None) => Cow::from(format!(
+            (Os::Windows, Architecture::X86, Accelerator::None)
+            | (Os::MacOs, Architecture::X86_64, Accelerator::None) => Cow::from(format!(
                 "{}-{}",
                 self.os.as_onnx_str(),
                 self.arch.as_onnx_str()
