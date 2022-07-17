@@ -336,15 +336,15 @@ impl OnnxPrebuiltArchive for Triplet {
             (Os::Windows, Architecture::X86_64, Accelerator::Gpu) => Cow::from(format!(
                 "{}-{}-{}",
                 self.os.as_onnx_str(),
+                "x64",
                 self.accelerator.as_onnx_str(),
-                self.arch.as_onnx_str(),
             )),
             // onnxruntime-linux-x64-gpu-1.8.1.tgz
             // Note how this one is inverted from the windows one above
             (Os::Linux, Architecture::X86_64, Accelerator::Gpu) => Cow::from(format!(
                 "{}-{}-{}",
                 self.os.as_onnx_str(),
-                self.arch.as_onnx_str(),
+                "x64",
                 self.accelerator.as_onnx_str(),
             )),
             _ => {
