@@ -2,7 +2,7 @@
 authors = ["Nicolas Bigaouette <nbigaouette@elementai.com>"]
 edition = "2018"
 name = "onnxruntime-sys"
-version = "0.0.22"
+version = "0.0.23"
 
 description = "Unsafe wrapper around Microsoft's ONNX Runtime"
 documentation = "https://docs.rs/onnxruntime-sys"
@@ -17,6 +17,7 @@ keywords = ["neuralnetworks", "onnx", "bindings"]
 [dependencies]
 
 [build-dependencies]
+once_cell = "1.13.0"
 bindgen = { version = "0.59", optional = true }
 ureq = "2.1"
 
@@ -29,6 +30,8 @@ tar = "0.4"
 
 [features]
 default = []
+
+directml = []
 
 # Disable build script, used to prevent issues with docs.rs
 disable-sys-build-script = []

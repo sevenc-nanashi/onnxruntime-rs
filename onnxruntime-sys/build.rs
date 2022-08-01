@@ -34,6 +34,23 @@ const ORT_ENV_GPU: &str = "ORT_USE_CUDA";
 /// Subdirectory (of the 'target' directory) into which to extract the prebuilt library.
 const ORT_PREBUILT_EXTRACT_DIR: &str = "onnxruntime";
 
+static TRIPLET: once_cell::sync::Lazy<Triplet> = once_cell::sync::Lazy::new(|| Triplet {
+    os: env::var("CARGO_CFG_TARGET_OS")
+        .expect("Unable to get TARGET_OS")
+        .parse()
+        .unwrap(),
+    arch: env::var("CARGO_CFG_TARGET_ARCH")
+        .expect("Unable to get TARGET_ARCH")
+        .parse()
+        .unwrap(),
+    accelerator: env::var(ORT_ENV_GPU).unwrap_or_default().parse().unwrap(),
+});
+
+static ONNXRUNTIME_DIR_NAME: once_cell::sync::Lazy<String> =
+    once_cell::sync::Lazy::new(
+        || format!("onnxruntime-{}-{}", TRIPLET.as_onnx_str(), ORT_VERSION,),
+    );
+
 #[cfg(feature = "disable-sys-build-script")]
 fn main() {
     println!("Build script disabled!");
@@ -43,8 +60,34 @@ fn main() {
 fn main() {
     let libort_install_dir = prepare_libort_dir();
 
-    let include_dir = libort_install_dir.join("include");
-    let lib_dir = libort_install_dir.join("lib");
+    #[cfg(not(feature = "directml"))]
+    let (include_dir, lib_dir) = (
+        libort_install_dir.join("include"),
+        libort_install_dir.join("lib"),
+    );
+
+    #[cfg(feature = "directml")]
+    let (include_dir, lib_dir) = {
+        let include_dir = libort_install_dir.join("build/native/include");
+        let runtimes_dir = libort_install_dir
+            .join("runtimes")
+            .join(format!(
+                "{}-{}",
+                TRIPLET.os.as_onnx_str(),
+                TRIPLET.arch.as_onnx_directml_str()
+            ))
+            .join("native");
+
+        let export_libort_dir = libort_install_dir.join(&*ONNXRUNTIME_DIR_NAME);
+        let export_include_dir = export_libort_dir.join("include");
+        let export_lib_dir = export_libort_dir.join("lib");
+        fs::create_dir_all(&export_include_dir).unwrap();
+        copy_all_files(include_dir, &export_include_dir);
+
+        fs::create_dir_all(&export_lib_dir).unwrap();
+        copy_all_files(runtimes_dir, &export_lib_dir);
+        (export_include_dir, export_lib_dir)
+    };
 
     println!("Include directory: {:?}", include_dir);
     println!("Lib directory: {:?}", lib_dir);
@@ -74,6 +117,20 @@ fn generate_bindings(_include_dir: &Path) {
     //         ORT_VERSION
     //     );
     // }
+}
+
+fn copy_all_files(from: impl AsRef<Path>, to: impl AsRef<Path>) {
+    let from = from.as_ref();
+    let to = to.as_ref();
+    for entry in fs::read_dir(from).unwrap().filter_map(|e| e.ok()) {
+        let path = entry.path();
+        if !path.is_dir() {
+            if let Some(file_name) = path.file_name() {
+                let dest_path = to.join(file_name);
+                fs::copy(path, dest_path).unwrap();
+            }
+        }
+    }
 }
 
 #[cfg(feature = "generate-bindings")]
@@ -233,6 +290,17 @@ impl OnnxPrebuiltArchive for Architecture {
     }
 }
 
+impl Architecture {
+    fn as_onnx_directml_str(&self) -> Cow<str> {
+        match self {
+            Architecture::X86 => Cow::from("x86"),
+            Architecture::X86_64 => Cow::from("x64"),
+            Architecture::Arm => Cow::from("arm"),
+            Architecture::Arm64 => Cow::from("arm64"),
+        }
+    }
+}
+
 #[derive(Debug)]
 #[allow(clippy::enum_variant_names)]
 enum Os {
@@ -352,23 +420,18 @@ impl OnnxPrebuiltArchive for Triplet {
 }
 
 fn prebuilt_archive_url() -> (PathBuf, String) {
-    let triplet = Triplet {
-        os: env::var("CARGO_CFG_TARGET_OS")
-            .expect("Unable to get TARGET_OS")
-            .parse()
-            .unwrap(),
-        arch: env::var("CARGO_CFG_TARGET_ARCH")
-            .expect("Unable to get TARGET_ARCH")
-            .parse()
-            .unwrap(),
-        accelerator: env::var(ORT_ENV_GPU).unwrap_or_default().parse().unwrap(),
-    };
-
+    #[cfg(not(feature = "directml"))]
     let prebuilt_archive = format!(
-        "onnxruntime-{}-{}.{}",
-        triplet.as_onnx_str(),
+        "{}.{}",
+        &*ONNXRUNTIME_DIR_NAME,
+        TRIPLET.os.archive_extension()
+    );
+
+    #[cfg(feature = "directml")]
+    let prebuilt_archive = format!(
+        "Microsoft.ML.OnnxRuntime.DirectML.{}.{}",
         ORT_VERSION,
-        triplet.os.archive_extension()
+        TRIPLET.os.archive_extension()
     );
     let prebuilt_url = format!(
         "{}/v{}/{}",
@@ -404,7 +467,12 @@ fn prepare_libort_dir_prebuilt() -> PathBuf {
         extract_archive(&downloaded_file, &extract_dir);
     }
 
-    extract_dir.join(prebuilt_archive.file_stem().unwrap())
+    // directmlの場合はzipの子ディレクトリがzipファイル名のディレクトリではないため、
+    // この処理は非directmlの場合のみ行う
+    #[cfg(not(feature = "directml"))]
+    let extract_dir = extract_dir.join(prebuilt_archive.file_stem().unwrap());
+
+    extract_dir
 }
 
 fn prepare_libort_dir() -> PathBuf {
