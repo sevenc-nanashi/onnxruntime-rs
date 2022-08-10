@@ -1,2 +1,2 @@
-[target.x86_64-apple-darwin]
-rustflags = ["-C", "link-args=-Wl,-rpath,target/onnxruntime/lib"]
+[env]
+ORT_OUT_DIR = { value = "target/debug/deps", relative = true }

@@ -31,6 +31,9 @@ const ORT_ENV_SYSTEM_LIB_LOCATION: &str = "ORT_LIB_LOCATION";
 /// Name of environment variable that, if present, controls wether to use CUDA or not.
 const ORT_ENV_GPU: &str = "ORT_USE_CUDA";
 
+/// onnxrutnime ライブラリを出力するためのディレクトリ
+const ORT_ENV_OUT_DIR: &str = "ORT_OUT_DIR";
+
 /// Subdirectory (of the 'target' directory) into which to extract the prebuilt library.
 const ORT_PREBUILT_EXTRACT_DIR: &str = "onnxruntime";
 
@@ -88,6 +91,9 @@ fn main() {
         copy_all_files(runtimes_dir, &export_lib_dir);
         (export_include_dir, export_lib_dir)
     };
+    if let Ok(ort_lib_out_dir) = env::var(ORT_ENV_OUT_DIR) {
+        output_onnxruntime_library(&lib_dir, ort_lib_out_dir);
+    }
 
     println!("Include directory: {:?}", include_dir);
     println!("Lib directory: {:?}", lib_dir);
@@ -99,8 +105,26 @@ fn main() {
     println!("cargo:rerun-if-env-changed={}", ORT_ENV_STRATEGY);
     println!("cargo:rerun-if-env-changed={}", ORT_ENV_GPU);
     println!("cargo:rerun-if-env-changed={}", ORT_ENV_SYSTEM_LIB_LOCATION);
+    println!("cargo:rerun-if-env-changed={}", ORT_ENV_OUT_DIR);
 
     generate_bindings(&include_dir);
+}
+
+fn output_onnxruntime_library(ort_lib_dir: impl AsRef<Path>, ort_lib_out_dir: impl AsRef<Path>) {
+    let ort_lib_dir = ort_lib_dir.as_ref();
+    let ort_lib_out_dir = ort_lib_out_dir.as_ref();
+    fs::create_dir_all(ort_lib_out_dir).unwrap();
+
+    for entry in ort_lib_dir.read_dir().unwrap().filter_map(|e| e.ok()) {
+        let path = entry.path();
+        if path.is_file() {
+            fs::copy(
+                &path,
+                ort_lib_out_dir.join(path.file_name().unwrap().to_str().unwrap()),
+            )
+            .unwrap();
+        }
+    }
 }
 
 #[cfg(not(feature = "generate-bindings"))]
