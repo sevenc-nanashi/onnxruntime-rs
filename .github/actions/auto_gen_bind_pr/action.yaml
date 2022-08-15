@@ -22,13 +22,9 @@ runs:
         # cargoのキャシュが原因でテストが失敗してることが考えられる場合はバージョン部分を変更する
         key: "v1-cargo-test-cache-${{ inputs.triple }}"
     - name: gen bind
-      run: cargo build --target ${{ inputs.triple }} --features generate-bindings
-      shell: bash
-    - name: check
-      run: git status -s | grep -E "M|A"
+      run: cargo build --target ${{ inputs.triple }} --features generate-bindings && git add --all
       shell: bash
     - name: create_pr
-      if: success()
       id: cpr
       uses: peter-evans/create-pull-request@v4
       with:

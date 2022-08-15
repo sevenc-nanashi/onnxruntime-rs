@@ -53,7 +53,7 @@ jobs:
           command: build
           args: --target x86_64-apple-darwin
       - name: Verify prebuilt archive downloaded (CPU, x86_64-apple-darwin)
-        run: ls -lh target/x86_64-apple-darwin/debug/build/onnxruntime-sys-*/out/onnxruntime-osx-x64-1.*.tgz
+        run: ls -lh target/x86_64-apple-darwin/debug/build/onnxruntime-sys-*/out/onnxruntime-osx-x86_64-1.*.tgz
       # ******************************************************************
       - name: Download prebuilt archive (CPU, i686-pc-windows-msvc)
         uses: actions-rs/cargo@v1
@@ -89,7 +89,7 @@ jobs:
           command: build
           args: --target x86_64-pc-windows-msvc
       - name: Verify prebuilt archive downloaded (GPU, x86_64-pc-windows-msvc)
-        run: ls -lh target/x86_64-pc-windows-msvc/debug/build/onnxruntime-sys-*/out/onnxruntime-win-gpu-x64-1.*.zip
+        run: ls -lh target/x86_64-pc-windows-msvc/debug/build/onnxruntime-sys-*/out/onnxruntime-win-x64-gpu-1.*.zip
 
   rust-test:
     strategy:
@@ -122,7 +122,9 @@ jobs:
         with:
           # cargoのキャシュが原因でテストが失敗してることが考えられる場合はバージョン部分を変更する
           key: "v1-cargo-test-cache-${{ matrix.os }}"
-      - run: cargo test
+      - name: Run cargo test
+        shell: bash
+        run: cargo test
 
   clippy:
     name: Clippy
@@ -151,13 +153,6 @@ jobs:
         with:
           toolchain: stable
           override: true
-      - name: Build (required to download libonnxruntime)
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --package onnxruntime-sys
-      - name: Copy libonnxruntime.*.dylib to /usr/lib/
-        run: sudo cp -r target/debug/build/onnxruntime-sys-*/out/onnxruntime/onnxruntime-*/lib/libonnxruntime.* /usr/lib/
       - name: Run cargo-tarpaulin
         uses: actions-rs/tarpaulin@v0.1
         with:
