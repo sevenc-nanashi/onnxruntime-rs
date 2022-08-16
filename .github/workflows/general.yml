@@ -98,6 +98,10 @@ jobs:
         include:
           - os: windows-2019
           - os: windows-2022
+          - os: windows-2019
+            features: directml
+          - os: windows-2022
+            features: directml
           - os: macos-10.15
           - os: macos-11
           - os: macos-12
@@ -124,7 +128,7 @@ jobs:
           key: "v1-cargo-test-cache-${{ matrix.os }}"
       - name: Run cargo test
         shell: bash
-        run: cargo test
+        run: cargo test --features ,${{ matrix.features }}
 
   clippy:
     name: Clippy

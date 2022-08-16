@@ -179,19 +179,26 @@ fn generate_bindings(include_dir: &Path) {
                 .join("session")
                 .display()
         ),
+        #[cfg(feature = "directml")]
+        format!("-D{}", "USE_DML"),
     ];
 
+    #[cfg(not(feature = "directml"))]
+    let header_name = "wrapper.h";
+    #[cfg(feature = "directml")]
+    let header_name = "wrapper_directml.h";
+
     // Tell cargo to invalidate the built crate whenever the wrapper changes
-    println!("cargo:rerun-if-changed=wrapper.h");
+    println!("cargo:rerun-if-changed={}", header_name);
     println!("cargo:rerun-if-changed=src/generated/bindings.rs");
 
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for
     // the resulting bindings.
-    let bindings = bindgen::Builder::default()
+    let mut bind_builder = bindgen::Builder::default()
         // The input header we would like to generate
         // bindings for.
-        .header("wrapper.h")
+        .header(header_name)
         // The current working directory is 'onnxruntime-sys'
         .clang_args(clang_args)
         // Tell cargo to invalidate the built crate whenever any of the
@@ -201,10 +208,16 @@ fn generate_bindings(include_dir: &Path) {
         .size_t_is_usize(true)
         // Format using rustfmt
         .rustfmt_bindings(true)
-        .rustified_enum("*")
-        // Finish the builder and generate the bindings.
+        .rustified_enum("*");
+
+    for entry in include_dir.read_dir().unwrap().filter_map(|e| e.ok()) {
+        let path = entry.path();
+        let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
+        bind_builder =
+            bind_builder.allowlist_file(format!(".*{}", file_name.replace(".h", "\\.h")));
+    }
+    let bindings = bind_builder
         .generate()
-        // Unwrap the Result and panic on failure.
         .expect("Unable to generate bindings");
 
     // Write the bindings to (source controlled) src/generated/<os>/<arch>/bindings.rs
@@ -212,8 +225,11 @@ fn generate_bindings(include_dir: &Path) {
         .join("src")
         .join("generated")
         .join(env::var("CARGO_CFG_TARGET_OS").unwrap())
-        .join(env::var("CARGO_CFG_TARGET_ARCH").unwrap())
-        .join("bindings.rs");
+        .join(env::var("CARGO_CFG_TARGET_ARCH").unwrap());
+    #[cfg(not(feature = "directml"))]
+    let generated_file = generated_file.join("bindings.rs");
+    #[cfg(feature = "directml")]
+    let generated_file = generated_file.join("bindings_directml.rs");
     println!("cargo:rerun-if-changed={:?}", generated_file);
     bindings
         .write_to_file(&generated_file)

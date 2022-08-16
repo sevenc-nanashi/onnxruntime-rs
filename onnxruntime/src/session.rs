@@ -336,6 +336,30 @@ impl<'a> SessionBuilder<'a> {
     }
 }
 
+#[cfg(feature = "directml")]
+mod directml {
+    use super::*;
+
+    impl<'a> SessionBuilder<'a> {
+        pub fn with_append_execution_provider_directml(
+            self,
+            device_id: usize,
+        ) -> Result<SessionBuilder<'a>> {
+            let status = unsafe {
+                sys::OrtSessionOptionsAppendExecutionProvider_DML(
+                    self.session_options_ptr,
+                    device_id as ::std::os::raw::c_int,
+                )
+            };
+            status_to_result(status).map_err(OrtError::SessionOptions)?;
+            Ok(self)
+        }
+    }
+}
+
+#[cfg(feature = "directml")]
+pub use self::directml::*;
+
 /// Type storing the session information, built from an [`Environment`](environment/struct.Environment.html)
 #[derive(Debug)]
 pub struct Session<'a> {

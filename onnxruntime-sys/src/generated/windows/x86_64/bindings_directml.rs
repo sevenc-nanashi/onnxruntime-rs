@@ -2,6 +2,3060 @@
 
 pub const ORT_API_VERSION: u32 = 11;
 pub type wchar_t = ::std::os::raw::c_ushort;
+pub type ULONG = ::std::os::raw::c_ulong;
+pub type BOOL = ::std::os::raw::c_int;
+pub type INT = ::std::os::raw::c_int;
+pub type UINT = ::std::os::raw::c_uint;
+pub type UINT16 = ::std::os::raw::c_ushort;
+pub type UINT64 = ::std::os::raw::c_ulonglong;
+pub type ULONG_PTR = ::std::os::raw::c_ulonglong;
+pub type SIZE_T = ULONG_PTR;
+pub type WCHAR = wchar_t;
+pub type LPCWSTR = *const WCHAR;
+pub type HANDLE = *mut ::std::os::raw::c_void;
+pub type HRESULT = ::std::os::raw::c_long;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _GUID {
+    pub Data1: ::std::os::raw::c_ulong,
+    pub Data2: ::std::os::raw::c_ushort,
+    pub Data3: ::std::os::raw::c_ushort,
+    pub Data4: [::std::os::raw::c_uchar; 8usize],
+}
+#[test]
+fn bindgen_test_layout__GUID() {
+    assert_eq!(
+        ::std::mem::size_of::<_GUID>(),
+        16usize,
+        concat!("Size of: ", stringify!(_GUID))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_GUID>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_GUID))
+    );
+    fn test_field_Data1() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<_GUID>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Data1) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(_GUID),
+                "::",
+                stringify!(Data1)
+            )
+        );
+    }
+    test_field_Data1();
+    fn test_field_Data2() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<_GUID>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Data2) as usize - ptr as usize
+            },
+            4usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(_GUID),
+                "::",
+                stringify!(Data2)
+            )
+        );
+    }
+    test_field_Data2();
+    fn test_field_Data3() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<_GUID>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Data3) as usize - ptr as usize
+            },
+            6usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(_GUID),
+                "::",
+                stringify!(Data3)
+            )
+        );
+    }
+    test_field_Data3();
+    fn test_field_Data4() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<_GUID>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Data4) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(_GUID),
+                "::",
+                stringify!(Data4)
+            )
+        );
+    }
+    test_field_Data4();
+}
+pub type GUID = _GUID;
+pub type IID = GUID;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct IUnknownVtbl {
+    pub QueryInterface: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut IUnknown,
+            riid: *const IID,
+            ppvObject: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub AddRef: ::std::option::Option<unsafe extern "C" fn(This: *mut IUnknown) -> ULONG>,
+    pub Release: ::std::option::Option<unsafe extern "C" fn(This: *mut IUnknown) -> ULONG>,
+}
+#[test]
+fn bindgen_test_layout_IUnknownVtbl() {
+    assert_eq!(
+        ::std::mem::size_of::<IUnknownVtbl>(),
+        24usize,
+        concat!("Size of: ", stringify!(IUnknownVtbl))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<IUnknownVtbl>(),
+        8usize,
+        concat!("Alignment of ", stringify!(IUnknownVtbl))
+    );
+    fn test_field_QueryInterface() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<IUnknownVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).QueryInterface) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(IUnknownVtbl),
+                "::",
+                stringify!(QueryInterface)
+            )
+        );
+    }
+    test_field_QueryInterface();
+    fn test_field_AddRef() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<IUnknownVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).AddRef) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(IUnknownVtbl),
+                "::",
+                stringify!(AddRef)
+            )
+        );
+    }
+    test_field_AddRef();
+    fn test_field_Release() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<IUnknownVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Release) as usize - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(IUnknownVtbl),
+                "::",
+                stringify!(Release)
+            )
+        );
+    }
+    test_field_Release();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct IUnknown {
+    pub lpVtbl: *mut IUnknownVtbl,
+}
+#[test]
+fn bindgen_test_layout_IUnknown() {
+    assert_eq!(
+        ::std::mem::size_of::<IUnknown>(),
+        8usize,
+        concat!("Size of: ", stringify!(IUnknown))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<IUnknown>(),
+        8usize,
+        concat!("Alignment of ", stringify!(IUnknown))
+    );
+    fn test_field_lpVtbl() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<IUnknown>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).lpVtbl) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(IUnknown),
+                "::",
+                stringify!(lpVtbl)
+            )
+        );
+    }
+    test_field_lpVtbl();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct DXGI_SAMPLE_DESC {
+    pub Count: UINT,
+    pub Quality: UINT,
+}
+#[test]
+fn bindgen_test_layout_DXGI_SAMPLE_DESC() {
+    assert_eq!(
+        ::std::mem::size_of::<DXGI_SAMPLE_DESC>(),
+        8usize,
+        concat!("Size of: ", stringify!(DXGI_SAMPLE_DESC))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<DXGI_SAMPLE_DESC>(),
+        4usize,
+        concat!("Alignment of ", stringify!(DXGI_SAMPLE_DESC))
+    );
+    fn test_field_Count() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<DXGI_SAMPLE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Count) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(DXGI_SAMPLE_DESC),
+                "::",
+                stringify!(Count)
+            )
+        );
+    }
+    test_field_Count();
+    fn test_field_Quality() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<DXGI_SAMPLE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Quality) as usize - ptr as usize
+            },
+            4usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(DXGI_SAMPLE_DESC),
+                "::",
+                stringify!(Quality)
+            )
+        );
+    }
+    test_field_Quality();
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum DXGI_FORMAT {
+    DXGI_FORMAT_UNKNOWN = 0,
+    DXGI_FORMAT_R32G32B32A32_TYPELESS = 1,
+    DXGI_FORMAT_R32G32B32A32_FLOAT = 2,
+    DXGI_FORMAT_R32G32B32A32_UINT = 3,
+    DXGI_FORMAT_R32G32B32A32_SINT = 4,
+    DXGI_FORMAT_R32G32B32_TYPELESS = 5,
+    DXGI_FORMAT_R32G32B32_FLOAT = 6,
+    DXGI_FORMAT_R32G32B32_UINT = 7,
+    DXGI_FORMAT_R32G32B32_SINT = 8,
+    DXGI_FORMAT_R16G16B16A16_TYPELESS = 9,
+    DXGI_FORMAT_R16G16B16A16_FLOAT = 10,
+    DXGI_FORMAT_R16G16B16A16_UNORM = 11,
+    DXGI_FORMAT_R16G16B16A16_UINT = 12,
+    DXGI_FORMAT_R16G16B16A16_SNORM = 13,
+    DXGI_FORMAT_R16G16B16A16_SINT = 14,
+    DXGI_FORMAT_R32G32_TYPELESS = 15,
+    DXGI_FORMAT_R32G32_FLOAT = 16,
+    DXGI_FORMAT_R32G32_UINT = 17,
+    DXGI_FORMAT_R32G32_SINT = 18,
+    DXGI_FORMAT_R32G8X24_TYPELESS = 19,
+    DXGI_FORMAT_D32_FLOAT_S8X24_UINT = 20,
+    DXGI_FORMAT_R32_FLOAT_X8X24_TYPELESS = 21,
+    DXGI_FORMAT_X32_TYPELESS_G8X24_UINT = 22,
+    DXGI_FORMAT_R10G10B10A2_TYPELESS = 23,
+    DXGI_FORMAT_R10G10B10A2_UNORM = 24,
+    DXGI_FORMAT_R10G10B10A2_UINT = 25,
+    DXGI_FORMAT_R11G11B10_FLOAT = 26,
+    DXGI_FORMAT_R8G8B8A8_TYPELESS = 27,
+    DXGI_FORMAT_R8G8B8A8_UNORM = 28,
+    DXGI_FORMAT_R8G8B8A8_UNORM_SRGB = 29,
+    DXGI_FORMAT_R8G8B8A8_UINT = 30,
+    DXGI_FORMAT_R8G8B8A8_SNORM = 31,
+    DXGI_FORMAT_R8G8B8A8_SINT = 32,
+    DXGI_FORMAT_R16G16_TYPELESS = 33,
+    DXGI_FORMAT_R16G16_FLOAT = 34,
+    DXGI_FORMAT_R16G16_UNORM = 35,
+    DXGI_FORMAT_R16G16_UINT = 36,
+    DXGI_FORMAT_R16G16_SNORM = 37,
+    DXGI_FORMAT_R16G16_SINT = 38,
+    DXGI_FORMAT_R32_TYPELESS = 39,
+    DXGI_FORMAT_D32_FLOAT = 40,
+    DXGI_FORMAT_R32_FLOAT = 41,
+    DXGI_FORMAT_R32_UINT = 42,
+    DXGI_FORMAT_R32_SINT = 43,
+    DXGI_FORMAT_R24G8_TYPELESS = 44,
+    DXGI_FORMAT_D24_UNORM_S8_UINT = 45,
+    DXGI_FORMAT_R24_UNORM_X8_TYPELESS = 46,
+    DXGI_FORMAT_X24_TYPELESS_G8_UINT = 47,
+    DXGI_FORMAT_R8G8_TYPELESS = 48,
+    DXGI_FORMAT_R8G8_UNORM = 49,
+    DXGI_FORMAT_R8G8_UINT = 50,
+    DXGI_FORMAT_R8G8_SNORM = 51,
+    DXGI_FORMAT_R8G8_SINT = 52,
+    DXGI_FORMAT_R16_TYPELESS = 53,
+    DXGI_FORMAT_R16_FLOAT = 54,
+    DXGI_FORMAT_D16_UNORM = 55,
+    DXGI_FORMAT_R16_UNORM = 56,
+    DXGI_FORMAT_R16_UINT = 57,
+    DXGI_FORMAT_R16_SNORM = 58,
+    DXGI_FORMAT_R16_SINT = 59,
+    DXGI_FORMAT_R8_TYPELESS = 60,
+    DXGI_FORMAT_R8_UNORM = 61,
+    DXGI_FORMAT_R8_UINT = 62,
+    DXGI_FORMAT_R8_SNORM = 63,
+    DXGI_FORMAT_R8_SINT = 64,
+    DXGI_FORMAT_A8_UNORM = 65,
+    DXGI_FORMAT_R1_UNORM = 66,
+    DXGI_FORMAT_R9G9B9E5_SHAREDEXP = 67,
+    DXGI_FORMAT_R8G8_B8G8_UNORM = 68,
+    DXGI_FORMAT_G8R8_G8B8_UNORM = 69,
+    DXGI_FORMAT_BC1_TYPELESS = 70,
+    DXGI_FORMAT_BC1_UNORM = 71,
+    DXGI_FORMAT_BC1_UNORM_SRGB = 72,
+    DXGI_FORMAT_BC2_TYPELESS = 73,
+    DXGI_FORMAT_BC2_UNORM = 74,
+    DXGI_FORMAT_BC2_UNORM_SRGB = 75,
+    DXGI_FORMAT_BC3_TYPELESS = 76,
+    DXGI_FORMAT_BC3_UNORM = 77,
+    DXGI_FORMAT_BC3_UNORM_SRGB = 78,
+    DXGI_FORMAT_BC4_TYPELESS = 79,
+    DXGI_FORMAT_BC4_UNORM = 80,
+    DXGI_FORMAT_BC4_SNORM = 81,
+    DXGI_FORMAT_BC5_TYPELESS = 82,
+    DXGI_FORMAT_BC5_UNORM = 83,
+    DXGI_FORMAT_BC5_SNORM = 84,
+    DXGI_FORMAT_B5G6R5_UNORM = 85,
+    DXGI_FORMAT_B5G5R5A1_UNORM = 86,
+    DXGI_FORMAT_B8G8R8A8_UNORM = 87,
+    DXGI_FORMAT_B8G8R8X8_UNORM = 88,
+    DXGI_FORMAT_R10G10B10_XR_BIAS_A2_UNORM = 89,
+    DXGI_FORMAT_B8G8R8A8_TYPELESS = 90,
+    DXGI_FORMAT_B8G8R8A8_UNORM_SRGB = 91,
+    DXGI_FORMAT_B8G8R8X8_TYPELESS = 92,
+    DXGI_FORMAT_B8G8R8X8_UNORM_SRGB = 93,
+    DXGI_FORMAT_BC6H_TYPELESS = 94,
+    DXGI_FORMAT_BC6H_UF16 = 95,
+    DXGI_FORMAT_BC6H_SF16 = 96,
+    DXGI_FORMAT_BC7_TYPELESS = 97,
+    DXGI_FORMAT_BC7_UNORM = 98,
+    DXGI_FORMAT_BC7_UNORM_SRGB = 99,
+    DXGI_FORMAT_AYUV = 100,
+    DXGI_FORMAT_Y410 = 101,
+    DXGI_FORMAT_Y416 = 102,
+    DXGI_FORMAT_NV12 = 103,
+    DXGI_FORMAT_P010 = 104,
+    DXGI_FORMAT_P016 = 105,
+    DXGI_FORMAT_420_OPAQUE = 106,
+    DXGI_FORMAT_YUY2 = 107,
+    DXGI_FORMAT_Y210 = 108,
+    DXGI_FORMAT_Y216 = 109,
+    DXGI_FORMAT_NV11 = 110,
+    DXGI_FORMAT_AI44 = 111,
+    DXGI_FORMAT_IA44 = 112,
+    DXGI_FORMAT_P8 = 113,
+    DXGI_FORMAT_A8P8 = 114,
+    DXGI_FORMAT_B4G4R4A4_UNORM = 115,
+    DXGI_FORMAT_P208 = 130,
+    DXGI_FORMAT_V208 = 131,
+    DXGI_FORMAT_V408 = 132,
+    DXGI_FORMAT_SAMPLER_FEEDBACK_MIN_MIP_OPAQUE = 189,
+    DXGI_FORMAT_SAMPLER_FEEDBACK_MIP_REGION_USED_OPAQUE = 190,
+    DXGI_FORMAT_FORCE_UINT = -1,
+}
+pub type D3D12_GPU_VIRTUAL_ADDRESS = UINT64;
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum D3D12_COMMAND_LIST_TYPE {
+    D3D12_COMMAND_LIST_TYPE_DIRECT = 0,
+    D3D12_COMMAND_LIST_TYPE_BUNDLE = 1,
+    D3D12_COMMAND_LIST_TYPE_COMPUTE = 2,
+    D3D12_COMMAND_LIST_TYPE_COPY = 3,
+    D3D12_COMMAND_LIST_TYPE_VIDEO_DECODE = 4,
+    D3D12_COMMAND_LIST_TYPE_VIDEO_PROCESS = 5,
+    D3D12_COMMAND_LIST_TYPE_VIDEO_ENCODE = 6,
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum D3D12_COMMAND_QUEUE_FLAGS {
+    D3D12_COMMAND_QUEUE_FLAG_NONE = 0,
+    D3D12_COMMAND_QUEUE_FLAG_DISABLE_GPU_TIMEOUT = 1,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct D3D12_COMMAND_QUEUE_DESC {
+    pub Type: D3D12_COMMAND_LIST_TYPE,
+    pub Priority: INT,
+    pub Flags: D3D12_COMMAND_QUEUE_FLAGS,
+    pub NodeMask: UINT,
+}
+#[test]
+fn bindgen_test_layout_D3D12_COMMAND_QUEUE_DESC() {
+    assert_eq!(
+        ::std::mem::size_of::<D3D12_COMMAND_QUEUE_DESC>(),
+        16usize,
+        concat!("Size of: ", stringify!(D3D12_COMMAND_QUEUE_DESC))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<D3D12_COMMAND_QUEUE_DESC>(),
+        4usize,
+        concat!("Alignment of ", stringify!(D3D12_COMMAND_QUEUE_DESC))
+    );
+    fn test_field_Type() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_COMMAND_QUEUE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Type) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_COMMAND_QUEUE_DESC),
+                "::",
+                stringify!(Type)
+            )
+        );
+    }
+    test_field_Type();
+    fn test_field_Priority() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_COMMAND_QUEUE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Priority) as usize - ptr as usize
+            },
+            4usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_COMMAND_QUEUE_DESC),
+                "::",
+                stringify!(Priority)
+            )
+        );
+    }
+    test_field_Priority();
+    fn test_field_Flags() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_COMMAND_QUEUE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Flags) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_COMMAND_QUEUE_DESC),
+                "::",
+                stringify!(Flags)
+            )
+        );
+    }
+    test_field_Flags();
+    fn test_field_NodeMask() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_COMMAND_QUEUE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).NodeMask) as usize - ptr as usize
+            },
+            12usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_COMMAND_QUEUE_DESC),
+                "::",
+                stringify!(NodeMask)
+            )
+        );
+    }
+    test_field_NodeMask();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct D3D12_BOX {
+    pub left: UINT,
+    pub top: UINT,
+    pub front: UINT,
+    pub right: UINT,
+    pub bottom: UINT,
+    pub back: UINT,
+}
+#[test]
+fn bindgen_test_layout_D3D12_BOX() {
+    assert_eq!(
+        ::std::mem::size_of::<D3D12_BOX>(),
+        24usize,
+        concat!("Size of: ", stringify!(D3D12_BOX))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<D3D12_BOX>(),
+        4usize,
+        concat!("Alignment of ", stringify!(D3D12_BOX))
+    );
+    fn test_field_left() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_BOX>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).left) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_BOX),
+                "::",
+                stringify!(left)
+            )
+        );
+    }
+    test_field_left();
+    fn test_field_top() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_BOX>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).top) as usize - ptr as usize
+            },
+            4usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_BOX),
+                "::",
+                stringify!(top)
+            )
+        );
+    }
+    test_field_top();
+    fn test_field_front() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_BOX>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).front) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_BOX),
+                "::",
+                stringify!(front)
+            )
+        );
+    }
+    test_field_front();
+    fn test_field_right() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_BOX>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).right) as usize - ptr as usize
+            },
+            12usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_BOX),
+                "::",
+                stringify!(right)
+            )
+        );
+    }
+    test_field_right();
+    fn test_field_bottom() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_BOX>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).bottom) as usize - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_BOX),
+                "::",
+                stringify!(bottom)
+            )
+        );
+    }
+    test_field_bottom();
+    fn test_field_back() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_BOX>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).back) as usize - ptr as usize
+            },
+            20usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_BOX),
+                "::",
+                stringify!(back)
+            )
+        );
+    }
+    test_field_back();
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum D3D12_HEAP_TYPE {
+    D3D12_HEAP_TYPE_DEFAULT = 1,
+    D3D12_HEAP_TYPE_UPLOAD = 2,
+    D3D12_HEAP_TYPE_READBACK = 3,
+    D3D12_HEAP_TYPE_CUSTOM = 4,
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum D3D12_CPU_PAGE_PROPERTY {
+    D3D12_CPU_PAGE_PROPERTY_UNKNOWN = 0,
+    D3D12_CPU_PAGE_PROPERTY_NOT_AVAILABLE = 1,
+    D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE = 2,
+    D3D12_CPU_PAGE_PROPERTY_WRITE_BACK = 3,
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum D3D12_MEMORY_POOL {
+    D3D12_MEMORY_POOL_UNKNOWN = 0,
+    D3D12_MEMORY_POOL_L0 = 1,
+    D3D12_MEMORY_POOL_L1 = 2,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct D3D12_HEAP_PROPERTIES {
+    pub Type: D3D12_HEAP_TYPE,
+    pub CPUPageProperty: D3D12_CPU_PAGE_PROPERTY,
+    pub MemoryPoolPreference: D3D12_MEMORY_POOL,
+    pub CreationNodeMask: UINT,
+    pub VisibleNodeMask: UINT,
+}
+#[test]
+fn bindgen_test_layout_D3D12_HEAP_PROPERTIES() {
+    assert_eq!(
+        ::std::mem::size_of::<D3D12_HEAP_PROPERTIES>(),
+        20usize,
+        concat!("Size of: ", stringify!(D3D12_HEAP_PROPERTIES))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<D3D12_HEAP_PROPERTIES>(),
+        4usize,
+        concat!("Alignment of ", stringify!(D3D12_HEAP_PROPERTIES))
+    );
+    fn test_field_Type() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_HEAP_PROPERTIES>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Type) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_HEAP_PROPERTIES),
+                "::",
+                stringify!(Type)
+            )
+        );
+    }
+    test_field_Type();
+    fn test_field_CPUPageProperty() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_HEAP_PROPERTIES>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).CPUPageProperty) as usize - ptr as usize
+            },
+            4usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_HEAP_PROPERTIES),
+                "::",
+                stringify!(CPUPageProperty)
+            )
+        );
+    }
+    test_field_CPUPageProperty();
+    fn test_field_MemoryPoolPreference() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_HEAP_PROPERTIES>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).MemoryPoolPreference) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_HEAP_PROPERTIES),
+                "::",
+                stringify!(MemoryPoolPreference)
+            )
+        );
+    }
+    test_field_MemoryPoolPreference();
+    fn test_field_CreationNodeMask() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_HEAP_PROPERTIES>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).CreationNodeMask) as usize - ptr as usize
+            },
+            12usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_HEAP_PROPERTIES),
+                "::",
+                stringify!(CreationNodeMask)
+            )
+        );
+    }
+    test_field_CreationNodeMask();
+    fn test_field_VisibleNodeMask() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_HEAP_PROPERTIES>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).VisibleNodeMask) as usize - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_HEAP_PROPERTIES),
+                "::",
+                stringify!(VisibleNodeMask)
+            )
+        );
+    }
+    test_field_VisibleNodeMask();
+}
+impl D3D12_HEAP_FLAGS {
+    pub const D3D12_HEAP_FLAG_ALLOW_ALL_BUFFERS_AND_TEXTURES: D3D12_HEAP_FLAGS =
+        D3D12_HEAP_FLAGS::D3D12_HEAP_FLAG_NONE;
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum D3D12_HEAP_FLAGS {
+    D3D12_HEAP_FLAG_NONE = 0,
+    D3D12_HEAP_FLAG_SHARED = 1,
+    D3D12_HEAP_FLAG_DENY_BUFFERS = 4,
+    D3D12_HEAP_FLAG_ALLOW_DISPLAY = 8,
+    D3D12_HEAP_FLAG_SHARED_CROSS_ADAPTER = 32,
+    D3D12_HEAP_FLAG_DENY_RT_DS_TEXTURES = 64,
+    D3D12_HEAP_FLAG_DENY_NON_RT_DS_TEXTURES = 128,
+    D3D12_HEAP_FLAG_HARDWARE_PROTECTED = 256,
+    D3D12_HEAP_FLAG_ALLOW_WRITE_WATCH = 512,
+    D3D12_HEAP_FLAG_ALLOW_SHADER_ATOMICS = 1024,
+    D3D12_HEAP_FLAG_CREATE_NOT_RESIDENT = 2048,
+    D3D12_HEAP_FLAG_CREATE_NOT_ZEROED = 4096,
+    D3D12_HEAP_FLAG_ALLOW_ONLY_BUFFERS = 192,
+    D3D12_HEAP_FLAG_ALLOW_ONLY_NON_RT_DS_TEXTURES = 68,
+    D3D12_HEAP_FLAG_ALLOW_ONLY_RT_DS_TEXTURES = 132,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct D3D12_HEAP_DESC {
+    pub SizeInBytes: UINT64,
+    pub Properties: D3D12_HEAP_PROPERTIES,
+    pub Alignment: UINT64,
+    pub Flags: D3D12_HEAP_FLAGS,
+}
+#[test]
+fn bindgen_test_layout_D3D12_HEAP_DESC() {
+    assert_eq!(
+        ::std::mem::size_of::<D3D12_HEAP_DESC>(),
+        48usize,
+        concat!("Size of: ", stringify!(D3D12_HEAP_DESC))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<D3D12_HEAP_DESC>(),
+        8usize,
+        concat!("Alignment of ", stringify!(D3D12_HEAP_DESC))
+    );
+    fn test_field_SizeInBytes() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_HEAP_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SizeInBytes) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_HEAP_DESC),
+                "::",
+                stringify!(SizeInBytes)
+            )
+        );
+    }
+    test_field_SizeInBytes();
+    fn test_field_Properties() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_HEAP_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Properties) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_HEAP_DESC),
+                "::",
+                stringify!(Properties)
+            )
+        );
+    }
+    test_field_Properties();
+    fn test_field_Alignment() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_HEAP_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Alignment) as usize - ptr as usize
+            },
+            32usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_HEAP_DESC),
+                "::",
+                stringify!(Alignment)
+            )
+        );
+    }
+    test_field_Alignment();
+    fn test_field_Flags() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_HEAP_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Flags) as usize - ptr as usize
+            },
+            40usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_HEAP_DESC),
+                "::",
+                stringify!(Flags)
+            )
+        );
+    }
+    test_field_Flags();
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum D3D12_RESOURCE_DIMENSION {
+    D3D12_RESOURCE_DIMENSION_UNKNOWN = 0,
+    D3D12_RESOURCE_DIMENSION_BUFFER = 1,
+    D3D12_RESOURCE_DIMENSION_TEXTURE1D = 2,
+    D3D12_RESOURCE_DIMENSION_TEXTURE2D = 3,
+    D3D12_RESOURCE_DIMENSION_TEXTURE3D = 4,
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum D3D12_TEXTURE_LAYOUT {
+    D3D12_TEXTURE_LAYOUT_UNKNOWN = 0,
+    D3D12_TEXTURE_LAYOUT_ROW_MAJOR = 1,
+    D3D12_TEXTURE_LAYOUT_64KB_UNDEFINED_SWIZZLE = 2,
+    D3D12_TEXTURE_LAYOUT_64KB_STANDARD_SWIZZLE = 3,
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum D3D12_RESOURCE_FLAGS {
+    D3D12_RESOURCE_FLAG_NONE = 0,
+    D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET = 1,
+    D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL = 2,
+    D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS = 4,
+    D3D12_RESOURCE_FLAG_DENY_SHADER_RESOURCE = 8,
+    D3D12_RESOURCE_FLAG_ALLOW_CROSS_ADAPTER = 16,
+    D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS = 32,
+    D3D12_RESOURCE_FLAG_VIDEO_DECODE_REFERENCE_ONLY = 64,
+    D3D12_RESOURCE_FLAG_VIDEO_ENCODE_REFERENCE_ONLY = 128,
+    D3D12_RESOURCE_FLAG_RAYTRACING_ACCELERATION_STRUCTURE = 256,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct D3D12_RESOURCE_DESC {
+    pub Dimension: D3D12_RESOURCE_DIMENSION,
+    pub Alignment: UINT64,
+    pub Width: UINT64,
+    pub Height: UINT,
+    pub DepthOrArraySize: UINT16,
+    pub MipLevels: UINT16,
+    pub Format: DXGI_FORMAT,
+    pub SampleDesc: DXGI_SAMPLE_DESC,
+    pub Layout: D3D12_TEXTURE_LAYOUT,
+    pub Flags: D3D12_RESOURCE_FLAGS,
+}
+#[test]
+fn bindgen_test_layout_D3D12_RESOURCE_DESC() {
+    assert_eq!(
+        ::std::mem::size_of::<D3D12_RESOURCE_DESC>(),
+        56usize,
+        concat!("Size of: ", stringify!(D3D12_RESOURCE_DESC))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<D3D12_RESOURCE_DESC>(),
+        8usize,
+        concat!("Alignment of ", stringify!(D3D12_RESOURCE_DESC))
+    );
+    fn test_field_Dimension() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RESOURCE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Dimension) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RESOURCE_DESC),
+                "::",
+                stringify!(Dimension)
+            )
+        );
+    }
+    test_field_Dimension();
+    fn test_field_Alignment() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RESOURCE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Alignment) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RESOURCE_DESC),
+                "::",
+                stringify!(Alignment)
+            )
+        );
+    }
+    test_field_Alignment();
+    fn test_field_Width() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RESOURCE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Width) as usize - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RESOURCE_DESC),
+                "::",
+                stringify!(Width)
+            )
+        );
+    }
+    test_field_Width();
+    fn test_field_Height() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RESOURCE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Height) as usize - ptr as usize
+            },
+            24usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RESOURCE_DESC),
+                "::",
+                stringify!(Height)
+            )
+        );
+    }
+    test_field_Height();
+    fn test_field_DepthOrArraySize() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RESOURCE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).DepthOrArraySize) as usize - ptr as usize
+            },
+            28usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RESOURCE_DESC),
+                "::",
+                stringify!(DepthOrArraySize)
+            )
+        );
+    }
+    test_field_DepthOrArraySize();
+    fn test_field_MipLevels() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RESOURCE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).MipLevels) as usize - ptr as usize
+            },
+            30usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RESOURCE_DESC),
+                "::",
+                stringify!(MipLevels)
+            )
+        );
+    }
+    test_field_MipLevels();
+    fn test_field_Format() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RESOURCE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Format) as usize - ptr as usize
+            },
+            32usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RESOURCE_DESC),
+                "::",
+                stringify!(Format)
+            )
+        );
+    }
+    test_field_Format();
+    fn test_field_SampleDesc() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RESOURCE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SampleDesc) as usize - ptr as usize
+            },
+            36usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RESOURCE_DESC),
+                "::",
+                stringify!(SampleDesc)
+            )
+        );
+    }
+    test_field_SampleDesc();
+    fn test_field_Layout() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RESOURCE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Layout) as usize - ptr as usize
+            },
+            44usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RESOURCE_DESC),
+                "::",
+                stringify!(Layout)
+            )
+        );
+    }
+    test_field_Layout();
+    fn test_field_Flags() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RESOURCE_DESC>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Flags) as usize - ptr as usize
+            },
+            48usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RESOURCE_DESC),
+                "::",
+                stringify!(Flags)
+            )
+        );
+    }
+    test_field_Flags();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct D3D12_RANGE {
+    pub Begin: SIZE_T,
+    pub End: SIZE_T,
+}
+#[test]
+fn bindgen_test_layout_D3D12_RANGE() {
+    assert_eq!(
+        ::std::mem::size_of::<D3D12_RANGE>(),
+        16usize,
+        concat!("Size of: ", stringify!(D3D12_RANGE))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<D3D12_RANGE>(),
+        8usize,
+        concat!("Alignment of ", stringify!(D3D12_RANGE))
+    );
+    fn test_field_Begin() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RANGE>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Begin) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RANGE),
+                "::",
+                stringify!(Begin)
+            )
+        );
+    }
+    test_field_Begin();
+    fn test_field_End() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_RANGE>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).End) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_RANGE),
+                "::",
+                stringify!(End)
+            )
+        );
+    }
+    test_field_End();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct D3D12_TILED_RESOURCE_COORDINATE {
+    pub X: UINT,
+    pub Y: UINT,
+    pub Z: UINT,
+    pub Subresource: UINT,
+}
+#[test]
+fn bindgen_test_layout_D3D12_TILED_RESOURCE_COORDINATE() {
+    assert_eq!(
+        ::std::mem::size_of::<D3D12_TILED_RESOURCE_COORDINATE>(),
+        16usize,
+        concat!("Size of: ", stringify!(D3D12_TILED_RESOURCE_COORDINATE))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<D3D12_TILED_RESOURCE_COORDINATE>(),
+        4usize,
+        concat!("Alignment of ", stringify!(D3D12_TILED_RESOURCE_COORDINATE))
+    );
+    fn test_field_X() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_TILED_RESOURCE_COORDINATE>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).X) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_TILED_RESOURCE_COORDINATE),
+                "::",
+                stringify!(X)
+            )
+        );
+    }
+    test_field_X();
+    fn test_field_Y() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_TILED_RESOURCE_COORDINATE>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Y) as usize - ptr as usize
+            },
+            4usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_TILED_RESOURCE_COORDINATE),
+                "::",
+                stringify!(Y)
+            )
+        );
+    }
+    test_field_Y();
+    fn test_field_Z() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_TILED_RESOURCE_COORDINATE>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Z) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_TILED_RESOURCE_COORDINATE),
+                "::",
+                stringify!(Z)
+            )
+        );
+    }
+    test_field_Z();
+    fn test_field_Subresource() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_TILED_RESOURCE_COORDINATE>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Subresource) as usize - ptr as usize
+            },
+            12usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_TILED_RESOURCE_COORDINATE),
+                "::",
+                stringify!(Subresource)
+            )
+        );
+    }
+    test_field_Subresource();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct D3D12_TILE_REGION_SIZE {
+    pub NumTiles: UINT,
+    pub UseBox: BOOL,
+    pub Width: UINT,
+    pub Height: UINT16,
+    pub Depth: UINT16,
+}
+#[test]
+fn bindgen_test_layout_D3D12_TILE_REGION_SIZE() {
+    assert_eq!(
+        ::std::mem::size_of::<D3D12_TILE_REGION_SIZE>(),
+        16usize,
+        concat!("Size of: ", stringify!(D3D12_TILE_REGION_SIZE))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<D3D12_TILE_REGION_SIZE>(),
+        4usize,
+        concat!("Alignment of ", stringify!(D3D12_TILE_REGION_SIZE))
+    );
+    fn test_field_NumTiles() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_TILE_REGION_SIZE>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).NumTiles) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_TILE_REGION_SIZE),
+                "::",
+                stringify!(NumTiles)
+            )
+        );
+    }
+    test_field_NumTiles();
+    fn test_field_UseBox() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_TILE_REGION_SIZE>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).UseBox) as usize - ptr as usize
+            },
+            4usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_TILE_REGION_SIZE),
+                "::",
+                stringify!(UseBox)
+            )
+        );
+    }
+    test_field_UseBox();
+    fn test_field_Width() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_TILE_REGION_SIZE>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Width) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_TILE_REGION_SIZE),
+                "::",
+                stringify!(Width)
+            )
+        );
+    }
+    test_field_Width();
+    fn test_field_Height() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_TILE_REGION_SIZE>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Height) as usize - ptr as usize
+            },
+            12usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_TILE_REGION_SIZE),
+                "::",
+                stringify!(Height)
+            )
+        );
+    }
+    test_field_Height();
+    fn test_field_Depth() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<D3D12_TILE_REGION_SIZE>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Depth) as usize - ptr as usize
+            },
+            14usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(D3D12_TILE_REGION_SIZE),
+                "::",
+                stringify!(Depth)
+            )
+        );
+    }
+    test_field_Depth();
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum D3D12_TILE_RANGE_FLAGS {
+    D3D12_TILE_RANGE_FLAG_NONE = 0,
+    D3D12_TILE_RANGE_FLAG_NULL = 1,
+    D3D12_TILE_RANGE_FLAG_SKIP = 2,
+    D3D12_TILE_RANGE_FLAG_REUSE_SINGLE_TILE = 4,
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum D3D12_TILE_MAPPING_FLAGS {
+    D3D12_TILE_MAPPING_FLAG_NONE = 0,
+    D3D12_TILE_MAPPING_FLAG_NO_HAZARD = 1,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ID3D12HeapVtbl {
+    pub QueryInterface: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Heap,
+            riid: *const IID,
+            ppvObject: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub AddRef: ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12Heap) -> ULONG>,
+    pub Release: ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12Heap) -> ULONG>,
+    pub GetPrivateData: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Heap,
+            guid: *const GUID,
+            pDataSize: *mut UINT,
+            pData: *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub SetPrivateData: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Heap,
+            guid: *const GUID,
+            DataSize: UINT,
+            pData: *const ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub SetPrivateDataInterface: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Heap,
+            guid: *const GUID,
+            pData: *const IUnknown,
+        ) -> HRESULT,
+    >,
+    pub SetName: ::std::option::Option<
+        unsafe extern "C" fn(This: *mut ID3D12Heap, Name: LPCWSTR) -> HRESULT,
+    >,
+    pub GetDevice: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Heap,
+            riid: *const IID,
+            ppvDevice: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub GetDesc: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Heap,
+            RetVal: *mut D3D12_HEAP_DESC,
+        ) -> *mut D3D12_HEAP_DESC,
+    >,
+}
+#[test]
+fn bindgen_test_layout_ID3D12HeapVtbl() {
+    assert_eq!(
+        ::std::mem::size_of::<ID3D12HeapVtbl>(),
+        72usize,
+        concat!("Size of: ", stringify!(ID3D12HeapVtbl))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<ID3D12HeapVtbl>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ID3D12HeapVtbl))
+    );
+    fn test_field_QueryInterface() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12HeapVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).QueryInterface) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12HeapVtbl),
+                "::",
+                stringify!(QueryInterface)
+            )
+        );
+    }
+    test_field_QueryInterface();
+    fn test_field_AddRef() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12HeapVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).AddRef) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12HeapVtbl),
+                "::",
+                stringify!(AddRef)
+            )
+        );
+    }
+    test_field_AddRef();
+    fn test_field_Release() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12HeapVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Release) as usize - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12HeapVtbl),
+                "::",
+                stringify!(Release)
+            )
+        );
+    }
+    test_field_Release();
+    fn test_field_GetPrivateData() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12HeapVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetPrivateData) as usize - ptr as usize
+            },
+            24usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12HeapVtbl),
+                "::",
+                stringify!(GetPrivateData)
+            )
+        );
+    }
+    test_field_GetPrivateData();
+    fn test_field_SetPrivateData() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12HeapVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetPrivateData) as usize - ptr as usize
+            },
+            32usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12HeapVtbl),
+                "::",
+                stringify!(SetPrivateData)
+            )
+        );
+    }
+    test_field_SetPrivateData();
+    fn test_field_SetPrivateDataInterface() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12HeapVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetPrivateDataInterface) as usize - ptr as usize
+            },
+            40usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12HeapVtbl),
+                "::",
+                stringify!(SetPrivateDataInterface)
+            )
+        );
+    }
+    test_field_SetPrivateDataInterface();
+    fn test_field_SetName() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12HeapVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetName) as usize - ptr as usize
+            },
+            48usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12HeapVtbl),
+                "::",
+                stringify!(SetName)
+            )
+        );
+    }
+    test_field_SetName();
+    fn test_field_GetDevice() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12HeapVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetDevice) as usize - ptr as usize
+            },
+            56usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12HeapVtbl),
+                "::",
+                stringify!(GetDevice)
+            )
+        );
+    }
+    test_field_GetDevice();
+    fn test_field_GetDesc() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12HeapVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetDesc) as usize - ptr as usize
+            },
+            64usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12HeapVtbl),
+                "::",
+                stringify!(GetDesc)
+            )
+        );
+    }
+    test_field_GetDesc();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ID3D12Heap {
+    pub lpVtbl: *mut ID3D12HeapVtbl,
+}
+#[test]
+fn bindgen_test_layout_ID3D12Heap() {
+    assert_eq!(
+        ::std::mem::size_of::<ID3D12Heap>(),
+        8usize,
+        concat!("Size of: ", stringify!(ID3D12Heap))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<ID3D12Heap>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ID3D12Heap))
+    );
+    fn test_field_lpVtbl() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12Heap>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).lpVtbl) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12Heap),
+                "::",
+                stringify!(lpVtbl)
+            )
+        );
+    }
+    test_field_lpVtbl();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ID3D12ResourceVtbl {
+    pub QueryInterface: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Resource,
+            riid: *const IID,
+            ppvObject: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub AddRef: ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12Resource) -> ULONG>,
+    pub Release: ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12Resource) -> ULONG>,
+    pub GetPrivateData: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Resource,
+            guid: *const GUID,
+            pDataSize: *mut UINT,
+            pData: *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub SetPrivateData: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Resource,
+            guid: *const GUID,
+            DataSize: UINT,
+            pData: *const ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub SetPrivateDataInterface: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Resource,
+            guid: *const GUID,
+            pData: *const IUnknown,
+        ) -> HRESULT,
+    >,
+    pub SetName: ::std::option::Option<
+        unsafe extern "C" fn(This: *mut ID3D12Resource, Name: LPCWSTR) -> HRESULT,
+    >,
+    pub GetDevice: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Resource,
+            riid: *const IID,
+            ppvDevice: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub Map: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Resource,
+            Subresource: UINT,
+            pReadRange: *const D3D12_RANGE,
+            ppData: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub Unmap: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Resource,
+            Subresource: UINT,
+            pWrittenRange: *const D3D12_RANGE,
+        ),
+    >,
+    pub GetDesc: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Resource,
+            RetVal: *mut D3D12_RESOURCE_DESC,
+        ) -> *mut D3D12_RESOURCE_DESC,
+    >,
+    pub GetGPUVirtualAddress: ::std::option::Option<
+        unsafe extern "C" fn(This: *mut ID3D12Resource) -> D3D12_GPU_VIRTUAL_ADDRESS,
+    >,
+    pub WriteToSubresource: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Resource,
+            DstSubresource: UINT,
+            pDstBox: *const D3D12_BOX,
+            pSrcData: *const ::std::os::raw::c_void,
+            SrcRowPitch: UINT,
+            SrcDepthPitch: UINT,
+        ) -> HRESULT,
+    >,
+    pub ReadFromSubresource: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Resource,
+            pDstData: *mut ::std::os::raw::c_void,
+            DstRowPitch: UINT,
+            DstDepthPitch: UINT,
+            SrcSubresource: UINT,
+            pSrcBox: *const D3D12_BOX,
+        ) -> HRESULT,
+    >,
+    pub GetHeapProperties: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Resource,
+            pHeapProperties: *mut D3D12_HEAP_PROPERTIES,
+            pHeapFlags: *mut D3D12_HEAP_FLAGS,
+        ) -> HRESULT,
+    >,
+}
+#[test]
+fn bindgen_test_layout_ID3D12ResourceVtbl() {
+    assert_eq!(
+        ::std::mem::size_of::<ID3D12ResourceVtbl>(),
+        120usize,
+        concat!("Size of: ", stringify!(ID3D12ResourceVtbl))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<ID3D12ResourceVtbl>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ID3D12ResourceVtbl))
+    );
+    fn test_field_QueryInterface() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).QueryInterface) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(QueryInterface)
+            )
+        );
+    }
+    test_field_QueryInterface();
+    fn test_field_AddRef() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).AddRef) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(AddRef)
+            )
+        );
+    }
+    test_field_AddRef();
+    fn test_field_Release() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Release) as usize - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(Release)
+            )
+        );
+    }
+    test_field_Release();
+    fn test_field_GetPrivateData() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetPrivateData) as usize - ptr as usize
+            },
+            24usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(GetPrivateData)
+            )
+        );
+    }
+    test_field_GetPrivateData();
+    fn test_field_SetPrivateData() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetPrivateData) as usize - ptr as usize
+            },
+            32usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(SetPrivateData)
+            )
+        );
+    }
+    test_field_SetPrivateData();
+    fn test_field_SetPrivateDataInterface() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetPrivateDataInterface) as usize - ptr as usize
+            },
+            40usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(SetPrivateDataInterface)
+            )
+        );
+    }
+    test_field_SetPrivateDataInterface();
+    fn test_field_SetName() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetName) as usize - ptr as usize
+            },
+            48usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(SetName)
+            )
+        );
+    }
+    test_field_SetName();
+    fn test_field_GetDevice() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetDevice) as usize - ptr as usize
+            },
+            56usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(GetDevice)
+            )
+        );
+    }
+    test_field_GetDevice();
+    fn test_field_Map() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Map) as usize - ptr as usize
+            },
+            64usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(Map)
+            )
+        );
+    }
+    test_field_Map();
+    fn test_field_Unmap() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Unmap) as usize - ptr as usize
+            },
+            72usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(Unmap)
+            )
+        );
+    }
+    test_field_Unmap();
+    fn test_field_GetDesc() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetDesc) as usize - ptr as usize
+            },
+            80usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(GetDesc)
+            )
+        );
+    }
+    test_field_GetDesc();
+    fn test_field_GetGPUVirtualAddress() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetGPUVirtualAddress) as usize - ptr as usize
+            },
+            88usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(GetGPUVirtualAddress)
+            )
+        );
+    }
+    test_field_GetGPUVirtualAddress();
+    fn test_field_WriteToSubresource() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).WriteToSubresource) as usize - ptr as usize
+            },
+            96usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(WriteToSubresource)
+            )
+        );
+    }
+    test_field_WriteToSubresource();
+    fn test_field_ReadFromSubresource() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).ReadFromSubresource) as usize - ptr as usize
+            },
+            104usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(ReadFromSubresource)
+            )
+        );
+    }
+    test_field_ReadFromSubresource();
+    fn test_field_GetHeapProperties() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12ResourceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetHeapProperties) as usize - ptr as usize
+            },
+            112usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12ResourceVtbl),
+                "::",
+                stringify!(GetHeapProperties)
+            )
+        );
+    }
+    test_field_GetHeapProperties();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ID3D12Resource {
+    pub lpVtbl: *mut ID3D12ResourceVtbl,
+}
+#[test]
+fn bindgen_test_layout_ID3D12Resource() {
+    assert_eq!(
+        ::std::mem::size_of::<ID3D12Resource>(),
+        8usize,
+        concat!("Size of: ", stringify!(ID3D12Resource))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<ID3D12Resource>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ID3D12Resource))
+    );
+    fn test_field_lpVtbl() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12Resource>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).lpVtbl) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12Resource),
+                "::",
+                stringify!(lpVtbl)
+            )
+        );
+    }
+    test_field_lpVtbl();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ID3D12FenceVtbl {
+    pub QueryInterface: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Fence,
+            riid: *const IID,
+            ppvObject: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub AddRef: ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12Fence) -> ULONG>,
+    pub Release: ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12Fence) -> ULONG>,
+    pub GetPrivateData: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Fence,
+            guid: *const GUID,
+            pDataSize: *mut UINT,
+            pData: *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub SetPrivateData: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Fence,
+            guid: *const GUID,
+            DataSize: UINT,
+            pData: *const ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub SetPrivateDataInterface: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Fence,
+            guid: *const GUID,
+            pData: *const IUnknown,
+        ) -> HRESULT,
+    >,
+    pub SetName: ::std::option::Option<
+        unsafe extern "C" fn(This: *mut ID3D12Fence, Name: LPCWSTR) -> HRESULT,
+    >,
+    pub GetDevice: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12Fence,
+            riid: *const IID,
+            ppvDevice: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub GetCompletedValue:
+        ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12Fence) -> UINT64>,
+    pub SetEventOnCompletion: ::std::option::Option<
+        unsafe extern "C" fn(This: *mut ID3D12Fence, Value: UINT64, hEvent: HANDLE) -> HRESULT,
+    >,
+    pub Signal: ::std::option::Option<
+        unsafe extern "C" fn(This: *mut ID3D12Fence, Value: UINT64) -> HRESULT,
+    >,
+}
+#[test]
+fn bindgen_test_layout_ID3D12FenceVtbl() {
+    assert_eq!(
+        ::std::mem::size_of::<ID3D12FenceVtbl>(),
+        88usize,
+        concat!("Size of: ", stringify!(ID3D12FenceVtbl))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<ID3D12FenceVtbl>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ID3D12FenceVtbl))
+    );
+    fn test_field_QueryInterface() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12FenceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).QueryInterface) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12FenceVtbl),
+                "::",
+                stringify!(QueryInterface)
+            )
+        );
+    }
+    test_field_QueryInterface();
+    fn test_field_AddRef() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12FenceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).AddRef) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12FenceVtbl),
+                "::",
+                stringify!(AddRef)
+            )
+        );
+    }
+    test_field_AddRef();
+    fn test_field_Release() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12FenceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Release) as usize - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12FenceVtbl),
+                "::",
+                stringify!(Release)
+            )
+        );
+    }
+    test_field_Release();
+    fn test_field_GetPrivateData() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12FenceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetPrivateData) as usize - ptr as usize
+            },
+            24usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12FenceVtbl),
+                "::",
+                stringify!(GetPrivateData)
+            )
+        );
+    }
+    test_field_GetPrivateData();
+    fn test_field_SetPrivateData() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12FenceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetPrivateData) as usize - ptr as usize
+            },
+            32usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12FenceVtbl),
+                "::",
+                stringify!(SetPrivateData)
+            )
+        );
+    }
+    test_field_SetPrivateData();
+    fn test_field_SetPrivateDataInterface() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12FenceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetPrivateDataInterface) as usize - ptr as usize
+            },
+            40usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12FenceVtbl),
+                "::",
+                stringify!(SetPrivateDataInterface)
+            )
+        );
+    }
+    test_field_SetPrivateDataInterface();
+    fn test_field_SetName() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12FenceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetName) as usize - ptr as usize
+            },
+            48usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12FenceVtbl),
+                "::",
+                stringify!(SetName)
+            )
+        );
+    }
+    test_field_SetName();
+    fn test_field_GetDevice() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12FenceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetDevice) as usize - ptr as usize
+            },
+            56usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12FenceVtbl),
+                "::",
+                stringify!(GetDevice)
+            )
+        );
+    }
+    test_field_GetDevice();
+    fn test_field_GetCompletedValue() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12FenceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetCompletedValue) as usize - ptr as usize
+            },
+            64usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12FenceVtbl),
+                "::",
+                stringify!(GetCompletedValue)
+            )
+        );
+    }
+    test_field_GetCompletedValue();
+    fn test_field_SetEventOnCompletion() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12FenceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetEventOnCompletion) as usize - ptr as usize
+            },
+            72usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12FenceVtbl),
+                "::",
+                stringify!(SetEventOnCompletion)
+            )
+        );
+    }
+    test_field_SetEventOnCompletion();
+    fn test_field_Signal() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12FenceVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Signal) as usize - ptr as usize
+            },
+            80usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12FenceVtbl),
+                "::",
+                stringify!(Signal)
+            )
+        );
+    }
+    test_field_Signal();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ID3D12Fence {
+    pub lpVtbl: *mut ID3D12FenceVtbl,
+}
+#[test]
+fn bindgen_test_layout_ID3D12Fence() {
+    assert_eq!(
+        ::std::mem::size_of::<ID3D12Fence>(),
+        8usize,
+        concat!("Size of: ", stringify!(ID3D12Fence))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<ID3D12Fence>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ID3D12Fence))
+    );
+    fn test_field_lpVtbl() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12Fence>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).lpVtbl) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12Fence),
+                "::",
+                stringify!(lpVtbl)
+            )
+        );
+    }
+    test_field_lpVtbl();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ID3D12CommandListVtbl {
+    pub QueryInterface: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandList,
+            riid: *const IID,
+            ppvObject: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub AddRef: ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12CommandList) -> ULONG>,
+    pub Release: ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12CommandList) -> ULONG>,
+    pub GetPrivateData: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandList,
+            guid: *const GUID,
+            pDataSize: *mut UINT,
+            pData: *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub SetPrivateData: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandList,
+            guid: *const GUID,
+            DataSize: UINT,
+            pData: *const ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub SetPrivateDataInterface: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandList,
+            guid: *const GUID,
+            pData: *const IUnknown,
+        ) -> HRESULT,
+    >,
+    pub SetName: ::std::option::Option<
+        unsafe extern "C" fn(This: *mut ID3D12CommandList, Name: LPCWSTR) -> HRESULT,
+    >,
+    pub GetDevice: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandList,
+            riid: *const IID,
+            ppvDevice: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub GetType: ::std::option::Option<
+        unsafe extern "C" fn(This: *mut ID3D12CommandList) -> D3D12_COMMAND_LIST_TYPE,
+    >,
+}
+#[test]
+fn bindgen_test_layout_ID3D12CommandListVtbl() {
+    assert_eq!(
+        ::std::mem::size_of::<ID3D12CommandListVtbl>(),
+        72usize,
+        concat!("Size of: ", stringify!(ID3D12CommandListVtbl))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<ID3D12CommandListVtbl>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ID3D12CommandListVtbl))
+    );
+    fn test_field_QueryInterface() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandListVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).QueryInterface) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandListVtbl),
+                "::",
+                stringify!(QueryInterface)
+            )
+        );
+    }
+    test_field_QueryInterface();
+    fn test_field_AddRef() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandListVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).AddRef) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandListVtbl),
+                "::",
+                stringify!(AddRef)
+            )
+        );
+    }
+    test_field_AddRef();
+    fn test_field_Release() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandListVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Release) as usize - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandListVtbl),
+                "::",
+                stringify!(Release)
+            )
+        );
+    }
+    test_field_Release();
+    fn test_field_GetPrivateData() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandListVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetPrivateData) as usize - ptr as usize
+            },
+            24usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandListVtbl),
+                "::",
+                stringify!(GetPrivateData)
+            )
+        );
+    }
+    test_field_GetPrivateData();
+    fn test_field_SetPrivateData() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandListVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetPrivateData) as usize - ptr as usize
+            },
+            32usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandListVtbl),
+                "::",
+                stringify!(SetPrivateData)
+            )
+        );
+    }
+    test_field_SetPrivateData();
+    fn test_field_SetPrivateDataInterface() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandListVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetPrivateDataInterface) as usize - ptr as usize
+            },
+            40usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandListVtbl),
+                "::",
+                stringify!(SetPrivateDataInterface)
+            )
+        );
+    }
+    test_field_SetPrivateDataInterface();
+    fn test_field_SetName() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandListVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetName) as usize - ptr as usize
+            },
+            48usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandListVtbl),
+                "::",
+                stringify!(SetName)
+            )
+        );
+    }
+    test_field_SetName();
+    fn test_field_GetDevice() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandListVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetDevice) as usize - ptr as usize
+            },
+            56usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandListVtbl),
+                "::",
+                stringify!(GetDevice)
+            )
+        );
+    }
+    test_field_GetDevice();
+    fn test_field_GetType() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandListVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetType) as usize - ptr as usize
+            },
+            64usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandListVtbl),
+                "::",
+                stringify!(GetType)
+            )
+        );
+    }
+    test_field_GetType();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ID3D12CommandList {
+    pub lpVtbl: *mut ID3D12CommandListVtbl,
+}
+#[test]
+fn bindgen_test_layout_ID3D12CommandList() {
+    assert_eq!(
+        ::std::mem::size_of::<ID3D12CommandList>(),
+        8usize,
+        concat!("Size of: ", stringify!(ID3D12CommandList))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<ID3D12CommandList>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ID3D12CommandList))
+    );
+    fn test_field_lpVtbl() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandList>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).lpVtbl) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandList),
+                "::",
+                stringify!(lpVtbl)
+            )
+        );
+    }
+    test_field_lpVtbl();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ID3D12CommandQueueVtbl {
+    pub QueryInterface: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            riid: *const IID,
+            ppvObject: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub AddRef: ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12CommandQueue) -> ULONG>,
+    pub Release:
+        ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12CommandQueue) -> ULONG>,
+    pub GetPrivateData: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            guid: *const GUID,
+            pDataSize: *mut UINT,
+            pData: *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub SetPrivateData: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            guid: *const GUID,
+            DataSize: UINT,
+            pData: *const ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub SetPrivateDataInterface: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            guid: *const GUID,
+            pData: *const IUnknown,
+        ) -> HRESULT,
+    >,
+    pub SetName: ::std::option::Option<
+        unsafe extern "C" fn(This: *mut ID3D12CommandQueue, Name: LPCWSTR) -> HRESULT,
+    >,
+    pub GetDevice: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            riid: *const IID,
+            ppvDevice: *mut *mut ::std::os::raw::c_void,
+        ) -> HRESULT,
+    >,
+    pub UpdateTileMappings: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            pResource: *mut ID3D12Resource,
+            NumResourceRegions: UINT,
+            pResourceRegionStartCoordinates: *const D3D12_TILED_RESOURCE_COORDINATE,
+            pResourceRegionSizes: *const D3D12_TILE_REGION_SIZE,
+            pHeap: *mut ID3D12Heap,
+            NumRanges: UINT,
+            pRangeFlags: *const D3D12_TILE_RANGE_FLAGS,
+            pHeapRangeStartOffsets: *const UINT,
+            pRangeTileCounts: *const UINT,
+            Flags: D3D12_TILE_MAPPING_FLAGS,
+        ),
+    >,
+    pub CopyTileMappings: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            pDstResource: *mut ID3D12Resource,
+            pDstRegionStartCoordinate: *const D3D12_TILED_RESOURCE_COORDINATE,
+            pSrcResource: *mut ID3D12Resource,
+            pSrcRegionStartCoordinate: *const D3D12_TILED_RESOURCE_COORDINATE,
+            pRegionSize: *const D3D12_TILE_REGION_SIZE,
+            Flags: D3D12_TILE_MAPPING_FLAGS,
+        ),
+    >,
+    pub ExecuteCommandLists: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            NumCommandLists: UINT,
+            ppCommandLists: *const *mut ID3D12CommandList,
+        ),
+    >,
+    pub SetMarker: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            Metadata: UINT,
+            pData: *const ::std::os::raw::c_void,
+            Size: UINT,
+        ),
+    >,
+    pub BeginEvent: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            Metadata: UINT,
+            pData: *const ::std::os::raw::c_void,
+            Size: UINT,
+        ),
+    >,
+    pub EndEvent: ::std::option::Option<unsafe extern "C" fn(This: *mut ID3D12CommandQueue)>,
+    pub Signal: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            pFence: *mut ID3D12Fence,
+            Value: UINT64,
+        ) -> HRESULT,
+    >,
+    pub Wait: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            pFence: *mut ID3D12Fence,
+            Value: UINT64,
+        ) -> HRESULT,
+    >,
+    pub GetTimestampFrequency: ::std::option::Option<
+        unsafe extern "C" fn(This: *mut ID3D12CommandQueue, pFrequency: *mut UINT64) -> HRESULT,
+    >,
+    pub GetClockCalibration: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            pGpuTimestamp: *mut UINT64,
+            pCpuTimestamp: *mut UINT64,
+        ) -> HRESULT,
+    >,
+    pub GetDesc: ::std::option::Option<
+        unsafe extern "C" fn(
+            This: *mut ID3D12CommandQueue,
+            RetVal: *mut D3D12_COMMAND_QUEUE_DESC,
+        ) -> *mut D3D12_COMMAND_QUEUE_DESC,
+    >,
+}
+#[test]
+fn bindgen_test_layout_ID3D12CommandQueueVtbl() {
+    assert_eq!(
+        ::std::mem::size_of::<ID3D12CommandQueueVtbl>(),
+        152usize,
+        concat!("Size of: ", stringify!(ID3D12CommandQueueVtbl))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<ID3D12CommandQueueVtbl>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ID3D12CommandQueueVtbl))
+    );
+    fn test_field_QueryInterface() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).QueryInterface) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(QueryInterface)
+            )
+        );
+    }
+    test_field_QueryInterface();
+    fn test_field_AddRef() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).AddRef) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(AddRef)
+            )
+        );
+    }
+    test_field_AddRef();
+    fn test_field_Release() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Release) as usize - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(Release)
+            )
+        );
+    }
+    test_field_Release();
+    fn test_field_GetPrivateData() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetPrivateData) as usize - ptr as usize
+            },
+            24usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(GetPrivateData)
+            )
+        );
+    }
+    test_field_GetPrivateData();
+    fn test_field_SetPrivateData() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetPrivateData) as usize - ptr as usize
+            },
+            32usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(SetPrivateData)
+            )
+        );
+    }
+    test_field_SetPrivateData();
+    fn test_field_SetPrivateDataInterface() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetPrivateDataInterface) as usize - ptr as usize
+            },
+            40usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(SetPrivateDataInterface)
+            )
+        );
+    }
+    test_field_SetPrivateDataInterface();
+    fn test_field_SetName() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetName) as usize - ptr as usize
+            },
+            48usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(SetName)
+            )
+        );
+    }
+    test_field_SetName();
+    fn test_field_GetDevice() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetDevice) as usize - ptr as usize
+            },
+            56usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(GetDevice)
+            )
+        );
+    }
+    test_field_GetDevice();
+    fn test_field_UpdateTileMappings() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).UpdateTileMappings) as usize - ptr as usize
+            },
+            64usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(UpdateTileMappings)
+            )
+        );
+    }
+    test_field_UpdateTileMappings();
+    fn test_field_CopyTileMappings() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).CopyTileMappings) as usize - ptr as usize
+            },
+            72usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(CopyTileMappings)
+            )
+        );
+    }
+    test_field_CopyTileMappings();
+    fn test_field_ExecuteCommandLists() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).ExecuteCommandLists) as usize - ptr as usize
+            },
+            80usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(ExecuteCommandLists)
+            )
+        );
+    }
+    test_field_ExecuteCommandLists();
+    fn test_field_SetMarker() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SetMarker) as usize - ptr as usize
+            },
+            88usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(SetMarker)
+            )
+        );
+    }
+    test_field_SetMarker();
+    fn test_field_BeginEvent() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).BeginEvent) as usize - ptr as usize
+            },
+            96usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(BeginEvent)
+            )
+        );
+    }
+    test_field_BeginEvent();
+    fn test_field_EndEvent() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).EndEvent) as usize - ptr as usize
+            },
+            104usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(EndEvent)
+            )
+        );
+    }
+    test_field_EndEvent();
+    fn test_field_Signal() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Signal) as usize - ptr as usize
+            },
+            112usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(Signal)
+            )
+        );
+    }
+    test_field_Signal();
+    fn test_field_Wait() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).Wait) as usize - ptr as usize
+            },
+            120usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(Wait)
+            )
+        );
+    }
+    test_field_Wait();
+    fn test_field_GetTimestampFrequency() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetTimestampFrequency) as usize - ptr as usize
+            },
+            128usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(GetTimestampFrequency)
+            )
+        );
+    }
+    test_field_GetTimestampFrequency();
+    fn test_field_GetClockCalibration() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetClockCalibration) as usize - ptr as usize
+            },
+            136usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(GetClockCalibration)
+            )
+        );
+    }
+    test_field_GetClockCalibration();
+    fn test_field_GetDesc() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueueVtbl>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetDesc) as usize - ptr as usize
+            },
+            144usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueueVtbl),
+                "::",
+                stringify!(GetDesc)
+            )
+        );
+    }
+    test_field_GetDesc();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ID3D12CommandQueue {
+    pub lpVtbl: *mut ID3D12CommandQueueVtbl,
+}
+#[test]
+fn bindgen_test_layout_ID3D12CommandQueue() {
+    assert_eq!(
+        ::std::mem::size_of::<ID3D12CommandQueue>(),
+        8usize,
+        concat!("Size of: ", stringify!(ID3D12CommandQueue))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<ID3D12CommandQueue>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ID3D12CommandQueue))
+    );
+    fn test_field_lpVtbl() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<ID3D12CommandQueue>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).lpVtbl) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(ID3D12CommandQueue),
+                "::",
+                stringify!(lpVtbl)
+            )
+        );
+    }
+    test_field_lpVtbl();
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct IDMLDevice {
+    _unused: [u8; 0],
+}
 #[repr(i32)]
 #[doc = " Copied from TensorProto::DataType"]
 #[doc = " Currently, Ort doesn't support complex64, complex128"]
@@ -6559,4 +9613,151 @@ extern "C" {
         options: *mut OrtSessionOptions,
         device_id: ::std::os::raw::c_int,
     ) -> OrtStatusPtr;
+}
+extern "C" {
+    pub fn OrtSessionOptionsAppendExecutionProvider_DML(
+        options: *mut OrtSessionOptions,
+        device_id: ::std::os::raw::c_int,
+    ) -> OrtStatusPtr;
+}
+extern "C" {
+    pub fn OrtSessionOptionsAppendExecutionProviderEx_DML(
+        options: *mut OrtSessionOptions,
+        dml_device: *mut IDMLDevice,
+        cmd_queue: *mut ID3D12CommandQueue,
+    ) -> OrtStatusPtr;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct OrtDmlApi {
+    pub SessionOptionsAppendExecutionProvider_DML: ::std::option::Option<
+        unsafe extern "C" fn(
+            options: *mut OrtSessionOptions,
+            device_id: ::std::os::raw::c_int,
+        ) -> OrtStatusPtr,
+    >,
+    pub SessionOptionsAppendExecutionProvider_DML1: ::std::option::Option<
+        unsafe extern "C" fn(
+            options: *mut OrtSessionOptions,
+            dml_device: *mut IDMLDevice,
+            cmd_queue: *mut ID3D12CommandQueue,
+        ) -> OrtStatusPtr,
+    >,
+    pub CreateGPUAllocationFromD3DResource: ::std::option::Option<
+        unsafe extern "C" fn(
+            d3d_resource: *mut ID3D12Resource,
+            dml_resource: *mut *mut ::std::os::raw::c_void,
+        ) -> OrtStatusPtr,
+    >,
+    pub FreeGPUAllocation: ::std::option::Option<
+        unsafe extern "C" fn(dml_resource: *mut ::std::os::raw::c_void) -> OrtStatusPtr,
+    >,
+    pub GetD3D12ResourceFromAllocation: ::std::option::Option<
+        unsafe extern "C" fn(
+            provider: *mut OrtAllocator,
+            dml_resource: *mut ::std::os::raw::c_void,
+            d3d_resource: *mut *mut ID3D12Resource,
+        ) -> OrtStatusPtr,
+    >,
+}
+#[test]
+fn bindgen_test_layout_OrtDmlApi() {
+    assert_eq!(
+        ::std::mem::size_of::<OrtDmlApi>(),
+        40usize,
+        concat!("Size of: ", stringify!(OrtDmlApi))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<OrtDmlApi>(),
+        8usize,
+        concat!("Alignment of ", stringify!(OrtDmlApi))
+    );
+    fn test_field_SessionOptionsAppendExecutionProvider_DML() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<OrtDmlApi>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SessionOptionsAppendExecutionProvider_DML) as usize
+                    - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(OrtDmlApi),
+                "::",
+                stringify!(SessionOptionsAppendExecutionProvider_DML)
+            )
+        );
+    }
+    test_field_SessionOptionsAppendExecutionProvider_DML();
+    fn test_field_SessionOptionsAppendExecutionProvider_DML1() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<OrtDmlApi>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).SessionOptionsAppendExecutionProvider_DML1) as usize
+                    - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(OrtDmlApi),
+                "::",
+                stringify!(SessionOptionsAppendExecutionProvider_DML1)
+            )
+        );
+    }
+    test_field_SessionOptionsAppendExecutionProvider_DML1();
+    fn test_field_CreateGPUAllocationFromD3DResource() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<OrtDmlApi>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).CreateGPUAllocationFromD3DResource) as usize
+                    - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(OrtDmlApi),
+                "::",
+                stringify!(CreateGPUAllocationFromD3DResource)
+            )
+        );
+    }
+    test_field_CreateGPUAllocationFromD3DResource();
+    fn test_field_FreeGPUAllocation() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<OrtDmlApi>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).FreeGPUAllocation) as usize - ptr as usize
+            },
+            24usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(OrtDmlApi),
+                "::",
+                stringify!(FreeGPUAllocation)
+            )
+        );
+    }
+    test_field_FreeGPUAllocation();
+    fn test_field_GetD3D12ResourceFromAllocation() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<OrtDmlApi>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).GetD3D12ResourceFromAllocation) as usize - ptr as usize
+            },
+            32usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(OrtDmlApi),
+                "::",
+                stringify!(GetD3D12ResourceFromAllocation)
+            )
+        );
+    }
+    test_field_GetD3D12ResourceFromAllocation();
 }

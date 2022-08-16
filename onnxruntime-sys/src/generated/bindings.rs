@@ -22,8 +22,18 @@ include!(concat!(
     "/src/generated/windows/x86/bindings.rs"
 ));
 
-#[cfg(all(target_os = "windows", target_arch = "x86_64"))]
+#[cfg(all(
+    target_os = "windows",
+    target_arch = "x86_64",
+    not(feature = "directml")
+))]
 include!(concat!(
     env!("CARGO_MANIFEST_DIR"),
     "/src/generated/windows/x86_64/bindings.rs"
+));
+
+#[cfg(all(target_os = "windows", target_arch = "x86_64", feature = "directml"))]
+include!(concat!(
+    env!("CARGO_MANIFEST_DIR"),
+    "/src/generated/windows/x86_64/bindings_directml.rs"
 ));

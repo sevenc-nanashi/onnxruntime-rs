@@ -4,6 +4,9 @@ inputs:
   triple:
     description: "cargo build target"
     required: true
+  additional_features:
+    description: "additional features"
+    required: false
 runs:
   using: "composite"
   steps:
@@ -22,15 +25,15 @@ runs:
         # cargoのキャシュが原因でテストが失敗してることが考えられる場合はバージョン部分を変更する
         key: "v1-cargo-test-cache-${{ inputs.triple }}"
     - name: gen bind
-      run: cargo build --target ${{ inputs.triple }} --features generate-bindings && git add --all
+      run: cargo build -p onnxruntime-sys --target ${{ inputs.triple }} --features generate-bindings,${{ inputs.additional_features }} && git add --all
       shell: bash
     - name: create_pr
       id: cpr
       uses: peter-evans/create-pull-request@v4
       with:
         commit-message: Automated generate bindings for ${{ inputs.triple }}
-        branch: ${{ steps.extract_branch.outputs.branch }}_auto_gen_bindings_${{ inputs.triple }}
+        branch: ${{ steps.extract_branch.outputs.branch }}_auto_gen_bindings_${{ inputs.triple }}_${{ inputs.additional_features }}
         delete-branch: true
-        title: Automated generate bindings for ${{ inputs.triple }}
+        title: Automated generate bindings for ${{ inputs.triple }} ${{ inputs.additional_features }}
         body: |
-          Automated generate bindings for ${{ inputs.triple }}
+          Automated generate bindings for ${{ inputs.triple }} ${{ inputs.additional_features }}
