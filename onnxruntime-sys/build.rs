@@ -495,7 +495,7 @@ fn prepare_libort_dir_prebuilt() -> PathBuf {
     let (prebuilt_archive, prebuilt_url) = prebuilt_archive_url();
 
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
-    let extract_dir = out_dir.join(&format!(
+    let extract_dir = out_dir.join(format!(
         "{}_{}_{}",
         ORT_PREBUILT_EXTRACT_DIR,
         ORT_VERSION,

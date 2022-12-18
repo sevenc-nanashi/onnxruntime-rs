@@ -180,7 +180,7 @@ fn main() {
         assert_ne!(num_dims, 0);
 
         println!("Input {} : num_dims={}", i, num_dims);
-        input_node_dims.resize_with(num_dims as usize, Default::default);
+        input_node_dims.resize_with(num_dims, Default::default);
         let status = unsafe {
             g_ort.as_ref().unwrap().GetDimensions.unwrap()(
                 tensor_info_ptr,
@@ -191,7 +191,7 @@ fn main() {
         CheckStatus(g_ort, status).unwrap();
 
         for j in 0..num_dims {
-            println!("Input {} : dim {}={}", i, j, input_node_dims[j as usize]);
+            println!("Input {} : dim {}={}", i, j, input_node_dims[j]);
         }
 
         unsafe { g_ort.as_ref().unwrap().ReleaseTypeInfo.unwrap()(typeinfo_ptr) };
