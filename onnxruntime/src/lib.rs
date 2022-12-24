@@ -117,6 +117,7 @@ to download.
 
 use std::{
     ffi::c_void,
+    os::raw::c_char,
     ptr::null_mut,
     sync::{atomic::AtomicPtr, Arc, Mutex},
 };
@@ -190,8 +191,8 @@ fn g_ort() -> sys::OrtApi {
     unsafe { *api_ptr_mut }
 }
 
-fn char_p_to_string(raw: *const i8) -> Result<String> {
-    let c_string = unsafe { std::ffi::CStr::from_ptr(raw as *mut i8).to_owned() };
+fn char_p_to_string(raw: *const c_char) -> Result<String> {
+    let c_string = unsafe { std::ffi::CStr::from_ptr(raw as *mut c_char).to_owned() };
 
     match c_string.into_string() {
         Ok(string) => Ok(string),
@@ -204,7 +205,7 @@ mod onnxruntime {
     //! Module containing a custom logger, used to catch the runtime's own logging and send it
     //! to Rust's tracing logging instead.
 
-    use std::ffi::CStr;
+    use std::{ffi::CStr, os::raw::c_char};
     use tracing::{debug, error, info, span, trace, warn, Level};
 
     use onnxruntime_sys as sys;
@@ -243,10 +244,10 @@ mod onnxruntime {
         pub(crate) fn custom_logger(
             _params: *mut std::ffi::c_void,
             severity: sys::OrtLoggingLevel,
-            category: *const i8,
-            logid: *const i8,
-            code_location: *const i8,
-            message: *const i8,
+            category: *const c_char,
+            logid: *const c_char,
+            code_location: *const c_char,
+            message: *const c_char,
         ) {
             let log_level = match severity {
                 sys::OrtLoggingLevel::ORT_LOGGING_LEVEL_VERBOSE => Level::TRACE,
