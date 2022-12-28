@@ -3,7 +3,6 @@
 use std::{fmt::Debug, ops::Deref};
 
 use ndarray::{Array, ArrayView};
-use tracing::debug;
 
 use onnxruntime_sys as sys;
 

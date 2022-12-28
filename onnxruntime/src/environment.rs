@@ -6,7 +6,7 @@ use std::{
 };
 
 use lazy_static::lazy_static;
-use tracing::{debug, error, warn};
+use tracing::{error, warn};
 
 use onnxruntime_sys as sys;
 

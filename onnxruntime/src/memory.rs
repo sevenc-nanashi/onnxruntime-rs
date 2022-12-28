@@ -1,5 +1,3 @@
-use tracing::debug;
-
 use onnxruntime_sys as sys;
 
 use tracing::error;

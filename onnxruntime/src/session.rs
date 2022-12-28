@@ -17,7 +17,7 @@ use std::os::windows::ffi::OsStrExt;
 use std::env;
 
 use ndarray::Array;
-use tracing::{debug, error};
+use tracing::error;
 
 use onnxruntime_sys as sys;
 

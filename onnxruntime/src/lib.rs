@@ -146,6 +146,24 @@ macro_rules! extern_system_fn {
     ($(#[$meta:meta])* $vis:vis unsafe fn $($tt:tt)*) => ($(#[$meta])* $vis unsafe extern "C" fn $($tt)*);
 }
 
+// textual scopeで`trace!`と`debug!`を宣言することにより、`tracing`のそれらの`use`を封じる
+
+macro_rules! trace {
+    ($($tt:tt)*) => {{
+        if cfg!(allow_verbose_logging) {
+            ::tracing::trace!($($tt)*);
+        }
+    }};
+}
+
+macro_rules! debug {
+    ($($tt:tt)*) => {{
+        if cfg!(allow_verbose_logging) {
+            ::tracing::debug!($($tt)*);
+        }
+    }};
+}
+
 pub mod download;
 pub mod environment;
 pub mod error;
@@ -204,9 +222,8 @@ fn char_p_to_string(raw: *const c_char) -> Result<String> {
 mod onnxruntime {
     //! Module containing a custom logger, used to catch the runtime's own logging and send it
     //! to Rust's tracing logging instead.
-
     use std::{ffi::CStr, os::raw::c_char};
-    use tracing::{debug, error, info, span, trace, warn, Level};
+    use tracing::{error, info, span, warn, Level};
 
     use onnxruntime_sys as sys;
 
@@ -272,16 +289,18 @@ mod onnxruntime {
             // Parse the code location
             let code_location: CodeLocation = code_location.into();
 
-            let span = span!(
-                Level::TRACE,
-                "onnxruntime",
-                category = category.to_str().unwrap_or("<unknown>"),
-                file = code_location.file,
-                line_number = code_location.line_number,
-                function = code_location.function,
-                logid = logid.to_str().unwrap_or("<unknown>"),
-            );
-            let _enter = span.enter();
+            let _span = cfg!(allow_verbose_logging).then(|| {
+                span!(
+                    Level::TRACE,
+                    "onnxruntime",
+                    category = category.to_str().unwrap_or("<unknown>"),
+                    file = code_location.file,
+                    line_number = code_location.line_number,
+                    function = code_location.function,
+                    logid = logid.to_str().unwrap_or("<unknown>"),
+                )
+                .entered()
+            });
 
             match log_level {
                 Level::TRACE => trace!("{:?}", message),
