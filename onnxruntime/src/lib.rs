@@ -267,10 +267,10 @@ mod onnxruntime {
             message: *const c_char,
         ) {
             let log_level = match severity {
-                sys::OrtLoggingLevel::ORT_LOGGING_LEVEL_VERBOSE => Level::TRACE,
-                sys::OrtLoggingLevel::ORT_LOGGING_LEVEL_INFO => Level::DEBUG,
-                sys::OrtLoggingLevel::ORT_LOGGING_LEVEL_WARNING => Level::INFO,
-                sys::OrtLoggingLevel::ORT_LOGGING_LEVEL_ERROR => Level::WARN,
+                sys::OrtLoggingLevel::ORT_LOGGING_LEVEL_VERBOSE => Level::DEBUG,
+                sys::OrtLoggingLevel::ORT_LOGGING_LEVEL_INFO => Level::INFO,
+                sys::OrtLoggingLevel::ORT_LOGGING_LEVEL_WARNING => Level::WARN,
+                sys::OrtLoggingLevel::ORT_LOGGING_LEVEL_ERROR => Level::ERROR,
                 sys::OrtLoggingLevel::ORT_LOGGING_LEVEL_FATAL => Level::ERROR,
             };
 
