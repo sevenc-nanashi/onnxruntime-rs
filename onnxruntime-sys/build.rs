@@ -18,6 +18,10 @@ const ORT_VERSION: &str = "1.13.1";
 /// Base Url from which to download pre-built releases/
 const ORT_RELEASE_BASE_URL: &str = "https://github.com/microsoft/onnxruntime/releases/download";
 
+/// Base Url from which to download pre-built releases for android/
+const ORT_MAVEN_RELEASE_BASE_URL: &str =
+    "https://repo1.maven.org/maven2/com/microsoft/onnxruntime/onnxruntime-android";
+
 /// Environment variable selecting which strategy to use for finding the library
 /// Possibilities:
 /// * "download": Download a pre-built library from upstream. This is the default if `ORT_STRATEGY` is not set.
@@ -63,11 +67,21 @@ fn main() {
 fn main() {
     let libort_install_dir = prepare_libort_dir();
 
+    // FIXME: directmlとandroidで処理の表現が違うので統一する
     #[cfg(not(feature = "directml"))]
-    let (include_dir, lib_dir) = (
-        libort_install_dir.join("include"),
-        libort_install_dir.join("lib"),
-    );
+    let (include_dir, lib_dir) = match TRIPLET.os {
+        Os::Android => {
+            let include_dir = libort_install_dir.join("headers");
+            let runtimes_dir = libort_install_dir
+                .join("jni")
+                .join(&*TRIPLET.arch.as_onnx_android_str());
+            (include_dir, runtimes_dir)
+        }
+        _ => (
+            libort_install_dir.join("include"),
+            libort_install_dir.join("lib"),
+        ),
+    };
 
     #[cfg(feature = "directml")]
     let (include_dir, lib_dir) = {
@@ -265,6 +279,7 @@ fn extract_archive(filename: &Path, output: &Path) {
     match filename.extension().map(|e| e.to_str()) {
         Some(Some("zip")) => extract_zip(filename, output),
         Some(Some("tgz")) => extract_tgz(filename, output),
+        Some(Some("aar")) => extract_zip(filename, output),
         _ => unimplemented!(),
     }
 }
@@ -349,6 +364,15 @@ impl Architecture {
             Architecture::Arm64 => Cow::from("arm64"),
         }
     }
+
+    fn as_onnx_android_str(&self) -> Cow<str> {
+        match self {
+            Architecture::X86 => Cow::from("x86"),
+            Architecture::X86_64 => Cow::from("x86_64"),
+            Architecture::Arm => Cow::from("armeabi-v7a"),
+            Architecture::Arm64 => Cow::from("arm64-v8a"),
+        }
+    }
 }
 
 #[derive(Debug)]
@@ -357,6 +381,7 @@ enum Os {
     Windows,
     Linux,
     MacOs,
+    Android,
 }
 
 impl Os {
@@ -365,6 +390,7 @@ impl Os {
             Os::Windows => "zip",
             Os::Linux => "tgz",
             Os::MacOs => "tgz",
+            Os::Android => "aar",
         }
     }
 }
@@ -377,6 +403,7 @@ impl FromStr for Os {
             "windows" => Ok(Os::Windows),
             "macos" => Ok(Os::MacOs),
             "linux" => Ok(Os::Linux),
+            "android" => Ok(Os::Android),
             _ => Err(format!("Unsupported os: {}", s)),
         }
     }
@@ -388,6 +415,7 @@ impl OnnxPrebuiltArchive for Os {
             Os::Windows => Cow::from("win"),
             Os::Linux => Cow::from("linux"),
             Os::MacOs => Cow::from("osx"),
+            Os::Android => Cow::from("android"),
         }
     }
 }
@@ -436,6 +464,7 @@ impl OnnxPrebuiltArchive for Triplet {
             }
             (Os::Windows, Architecture::X86, Accelerator::None)
             | (Os::MacOs, Architecture::X86_64, Accelerator::None)
+            | (Os::Android, Architecture::Arm64, Accelerator::None)
             | (Os::Linux, Architecture::Arm64, Accelerator::None) => Cow::from(format!(
                 "{}-{}",
                 self.os.as_onnx_str(),
@@ -484,11 +513,19 @@ fn prebuilt_archive_url() -> (PathBuf, String) {
         ORT_VERSION,
         TRIPLET.os.archive_extension()
     );
-    let prebuilt_url = format!(
-        "{}/v{}/{}",
-        ORT_RELEASE_BASE_URL, ORT_VERSION, prebuilt_archive
-    );
-
+    let prebuilt_url = match TRIPLET.os {
+        Os::Android => format!(
+            "{}/{}/onnxruntime-android-{}.{}",
+            ORT_MAVEN_RELEASE_BASE_URL,
+            ORT_VERSION,
+            ORT_VERSION,
+            TRIPLET.os.archive_extension()
+        ),
+        _ => format!(
+            "{}/v{}/{}",
+            ORT_RELEASE_BASE_URL, ORT_VERSION, prebuilt_archive
+        ),
+    };
     (PathBuf::from(prebuilt_archive), prebuilt_url)
 }
 
@@ -534,7 +571,10 @@ fn prepare_libort_dir_prebuilt() -> PathBuf {
     // directmlの場合はzipの子ディレクトリがzipファイル名のディレクトリではないため、
     // この処理は非directmlの場合のみ行う
     #[cfg(not(feature = "directml"))]
-    let extract_dir = extract_dir.join(prebuilt_archive.file_stem().unwrap());
+    let extract_dir = match TRIPLET.os {
+        Os::Android => extract_dir,
+        _ => extract_dir.join(prebuilt_archive.file_stem().unwrap()),
+    };
 
     extract_dir
 }
