@@ -22,6 +22,13 @@ const ORT_RELEASE_BASE_URL: &str = "https://github.com/microsoft/onnxruntime/rel
 const ORT_MAVEN_RELEASE_BASE_URL: &str =
     "https://repo1.maven.org/maven2/com/microsoft/onnxruntime/onnxruntime-android";
 
+/// Base Url from which to download ios pre-build releases/
+const ORT_IOS_RELEASE_BASE_URL: &str =
+    "https://github.com/VOICEVOX/onnxruntime-builder/releases/download";
+
+/// onnxruntime repository/
+const ORT_REPOSITORY_URL: &str = "https://github.com/microsoft/onnxruntime.git";
+
 /// Environment variable selecting which strategy to use for finding the library
 /// Possibilities:
 /// * "download": Download a pre-built library from upstream. This is the default if `ORT_STRATEGY` is not set.
@@ -382,6 +389,7 @@ enum Os {
     Linux,
     MacOs,
     Android,
+    IOs,
 }
 
 impl Os {
@@ -391,6 +399,7 @@ impl Os {
             Os::Linux => "tgz",
             Os::MacOs => "tgz",
             Os::Android => "aar",
+            Os::IOs => "tgz",
         }
     }
 }
@@ -404,6 +413,7 @@ impl FromStr for Os {
             "macos" => Ok(Os::MacOs),
             "linux" => Ok(Os::Linux),
             "android" => Ok(Os::Android),
+            "ios" => Ok(Os::IOs),
             _ => Err(format!("Unsupported os: {}", s)),
         }
     }
@@ -416,6 +426,7 @@ impl OnnxPrebuiltArchive for Os {
             Os::Linux => Cow::from("linux"),
             Os::MacOs => Cow::from("osx"),
             Os::Android => Cow::from("android"),
+            Os::IOs => Cow::from("ios"),
         }
     }
 }
@@ -489,6 +500,22 @@ impl OnnxPrebuiltArchive for Triplet {
                 "x64",
                 self.accelerator.as_onnx_str(),
             )),
+            // onnxruntime-ios-arm64-1.8.1.tgz
+            // Note aarch64 simulator have a '-sim' in the target, but x86_64 does not; both have '-sim' for onnxruntime
+            (Os::IOs, Architecture::Arm64, Accelerator::None) => {
+                let os = if env::var("TARGET").unwrap().ends_with("sim") {
+                    format!("{}-sim", self.os.as_onnx_str())
+                } else {
+                    format!("{}", self.os.as_onnx_str())
+                };
+                Cow::from(format!("{}-{}", os, "arm64"))
+            }
+            // onnxruntime-ios-sim-x86_64-1.8.1.tgz
+            (Os::IOs, Architecture::X86_64, Accelerator::None) => Cow::from(format!(
+                "{}-sim-{}",
+                self.os.as_onnx_str(),
+                self.arch.as_onnx_str()
+            )),
             _ => {
                 panic!(
                     "Unsupported prebuilt triplet: {:?}, {:?}, {:?}. Please use {}=system and {}=/path/to/onnxruntime",
@@ -520,6 +547,10 @@ fn prebuilt_archive_url() -> (PathBuf, String) {
             ORT_VERSION,
             ORT_VERSION,
             TRIPLET.os.archive_extension()
+        ),
+        Os::IOs => format!(
+            "{}/{}/{}",
+            ORT_IOS_RELEASE_BASE_URL, ORT_VERSION, prebuilt_archive
         ),
         _ => format!(
             "{}/v{}/{}",
