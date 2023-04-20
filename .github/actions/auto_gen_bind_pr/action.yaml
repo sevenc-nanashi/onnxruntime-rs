@@ -29,7 +29,7 @@ runs:
       shell: bash
       run: |
         echo "$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin" >> "$GITHUB_PATH"
-        UNDERSCORED_TRIPLE = sed 's/-/_/g' <<< "${{ inputs.triple }}"
+        UNDERSCORED_TRIPLE=$(sed 's/-/_/g' <<< "${{ inputs.triple }}")
         echo "AR_$UNDERSCORED_TRIPLE=llvm-ar" >> "$GITHUB_ENV"
     - uses: actions-rs/toolchain@v1
       with:
