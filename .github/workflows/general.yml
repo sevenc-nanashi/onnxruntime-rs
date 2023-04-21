@@ -61,7 +61,7 @@ jobs:
         with:
           command: build
           args: --target x86_64-linux-android
-      - name: Verify prebuilt archive downloaded (CPU, aarch64-linux-android)
+      - name: Verify prebuilt archive downloaded (CPU, x86_64-linux-android)
         run: ls -lh target/x86_64-linux-android/debug/build/onnxruntime-sys-*/out/onnxruntime*.aar
       # ******************************************************************
       - name: Download prebuilt archive (CPU, x86_64-apple-darwin)
