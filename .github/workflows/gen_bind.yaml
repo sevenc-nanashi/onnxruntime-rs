@@ -17,6 +17,9 @@ jobs:
             triple: aarch64-unknown-linux-gnu
           - os: ubuntu-latest
             triple: aarch64-linux-android
+          - os: ubuntu-latest
+            triple: x86_64-linux-android
+
           - os: windows-latest
             triple: x86_64-pc-windows-msvc
           - os: windows-latest
@@ -24,6 +27,7 @@ jobs:
             additional_features: directml
           - os: windows-latest
             triple: i686-pc-windows-msvc
+
           - os: macos-latest
             triple: x86_64-apple-darwin
           - os: macos-latest
