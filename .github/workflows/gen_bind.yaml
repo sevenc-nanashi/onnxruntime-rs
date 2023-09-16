@@ -38,6 +38,21 @@ jobs:
             triple: aarch64-apple-ios-sim
           - os: macos-latest
             triple: x86_64-apple-ios
+          - os: macos-latest
+            triple: x86_64-apple-darwin
+            additional_features: coreml
+          - os: macos-latest
+            triple: aarch64-apple-darwin
+            additional_features: coreml
+          - os: macos-latest
+            triple: aarch64-apple-ios
+            additional_features: coreml
+          - os: macos-latest
+            triple: aarch64-apple-ios-sim
+            additional_features: coreml
+          - os: macos-latest
+            triple: x86_64-apple-ios
+            additional_features: coreml
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
