@@ -28,16 +28,28 @@ include!(concat!(
     "/src/generated/macos/x86_64/bindings.rs"
 ));
 
-#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+#[cfg(all(target_os = "macos", target_arch = "aarch64", not(feature = "coreml")))]
 include!(concat!(
     env!("CARGO_MANIFEST_DIR"),
     "/src/generated/macos/aarch64/bindings.rs"
 ));
 
-#[cfg(all(target_os = "ios", target_arch = "aarch64"))]
+#[cfg(all(target_os = "ios", target_arch = "aarch64", not(feature = "coreml")))]
 include!(concat!(
     env!("CARGO_MANIFEST_DIR"),
     "/src/generated/ios/aarch64/bindings.rs"
+));
+
+#[cfg(all(target_os = "ios", target_arch = "aarch64", feature = "coreml"))]
+include!(concat!(
+    env!("CARGO_MANIFEST_DIR"),
+    "/src/generated/ios/aarch64/bindings_coreml.rs"
+));
+
+#[cfg(all(target_os = "ios", target_arch = "x86_64", feature = "coreml"))]
+include!(concat!(
+    env!("CARGO_MANIFEST_DIR"),
+    "/src/generated/ios/x86_64/bindings_coreml.rs"
 ));
 
 #[cfg(all(target_os = "ios", target_arch = "x86_64"))]

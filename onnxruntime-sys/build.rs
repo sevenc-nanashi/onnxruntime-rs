@@ -75,7 +75,7 @@ fn main() {
     let libort_install_dir = prepare_libort_dir();
 
     // FIXME: directmlとandroidで処理の表現が違うので統一する
-    #[cfg(not(feature = "directml"))]
+    #[cfg(not(any(feature = "directml", feature = "coreml")))]
     let (include_dir, lib_dir) = match TRIPLET.os {
         Os::Android => {
             let include_dir = libort_install_dir.join("headers");
@@ -91,6 +91,29 @@ fn main() {
     };
 
     #[cfg(feature = "directml")]
+    let (include_dir, lib_dir) = {
+        let include_dir = libort_install_dir.join("build/native/include");
+        let runtimes_dir = libort_install_dir
+            .join("runtimes")
+            .join(format!(
+                "{}-{}",
+                TRIPLET.os.as_onnx_str(),
+                TRIPLET.arch.as_onnx_directml_str()
+            ))
+            .join("native");
+
+        let export_libort_dir = libort_install_dir.join(&*ONNXRUNTIME_DIR_NAME);
+        let export_include_dir = export_libort_dir.join("include");
+        let export_lib_dir = export_libort_dir.join("lib");
+        fs::create_dir_all(&export_include_dir).unwrap();
+        copy_all_files(include_dir, &export_include_dir);
+
+        fs::create_dir_all(&export_lib_dir).unwrap();
+        copy_all_files(runtimes_dir, &export_lib_dir);
+        (export_include_dir, export_lib_dir)
+    };
+
+    #[cfg(feature = "coreml")]
     let (include_dir, lib_dir) = {
         let include_dir = libort_install_dir.join("build/native/include");
         let runtimes_dir = libort_install_dir
@@ -247,10 +270,12 @@ fn generate_bindings(include_dir: &Path) {
         .join("generated")
         .join(env::var("CARGO_CFG_TARGET_OS").unwrap())
         .join(env::var("CARGO_CFG_TARGET_ARCH").unwrap());
-    #[cfg(not(feature = "directml"))]
+    #[cfg(not(any(feature = "directml", feature = "coreml")))]
     let generated_file = generated_file.join("bindings.rs");
     #[cfg(feature = "directml")]
     let generated_file = generated_file.join("bindings_directml.rs");
+    #[cfg(feature = "coreml")]
+    let generated_file = generated_file.join("bindings_coreml.rs");
     println!("cargo:rerun-if-changed={:?}", generated_file);
     bindings
         .write_to_file(&generated_file)

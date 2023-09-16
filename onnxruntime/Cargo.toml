@@ -39,6 +39,7 @@ ureq = "2.1"
 
 [features]
 directml = ["onnxruntime-sys/directml"]
+coreml = ["onnxruntime-sys/coreml"]
 
 # Fetch model from ONNX Model Zoo (https://github.com/onnx/models)
 model-fetching = ["ureq"]
