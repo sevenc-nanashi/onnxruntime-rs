@@ -75,7 +75,7 @@ fn main() {
     let libort_install_dir = prepare_libort_dir();
 
     // FIXME: directmlとandroidで処理の表現が違うので統一する
-    #[cfg(not(any(feature = "directml", feature = "coreml")))]
+    #[cfg(not(feature = "directml"))]
     let (include_dir, lib_dir) = match TRIPLET.os {
         Os::Android => {
             let include_dir = libort_install_dir.join("headers");
@@ -113,28 +113,6 @@ fn main() {
         (export_include_dir, export_lib_dir)
     };
 
-    #[cfg(feature = "coreml")]
-    let (include_dir, lib_dir) = {
-        let include_dir = libort_install_dir.join("build/native/include");
-        let runtimes_dir = libort_install_dir
-            .join("runtimes")
-            .join(format!(
-                "{}-{}",
-                TRIPLET.os.as_onnx_str(),
-                TRIPLET.arch.as_onnx_directml_str()
-            ))
-            .join("native");
-
-        let export_libort_dir = libort_install_dir.join(&*ONNXRUNTIME_DIR_NAME);
-        let export_include_dir = export_libort_dir.join("include");
-        let export_lib_dir = export_libort_dir.join("lib");
-        fs::create_dir_all(&export_include_dir).unwrap();
-        copy_all_files(include_dir, &export_include_dir);
-
-        fs::create_dir_all(&export_lib_dir).unwrap();
-        copy_all_files(runtimes_dir, &export_lib_dir);
-        (export_include_dir, export_lib_dir)
-    };
     if let Ok(ort_lib_out_dir) = env::var(ORT_ENV_OUT_DIR) {
         output_onnxruntime_library(&lib_dir, &ort_lib_out_dir);
         for entry in lib_dir.read_dir().unwrap().flat_map(|e| e.ok()) {
@@ -224,7 +202,7 @@ fn generate_bindings(include_dir: &Path) {
                 .display()
         ),
         #[cfg(feature = "directml")]
-        format!("-D{}", "USE_DML"),
+       format!("-D{}", "USE_DML"),
     ];
 
 
