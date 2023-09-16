@@ -202,9 +202,8 @@ fn generate_bindings(include_dir: &Path) {
                 .display()
         ),
         #[cfg(feature = "directml")]
-       format!("-D{}", "USE_DML"),
+        format!("-D{}", "USE_DML"),
     ];
-
 
     let header_name = if cfg!(feature = "directml") {
         "wrapper_directml.h"
