@@ -227,10 +227,14 @@ fn generate_bindings(include_dir: &Path) {
         format!("-D{}", "USE_DML"),
     ];
 
-    #[cfg(not(feature = "directml"))]
-    let header_name = "wrapper.h";
-    #[cfg(feature = "directml")]
-    let header_name = "wrapper_directml.h";
+
+    let header_name = if cfg!(feature = "directml") {
+        "wrapper_directml.h"
+    } else if cfg!(feature = "coreml") {
+        "wrapper_coreml.h"
+    } else {
+        "wrapper.h"
+    };
 
     // Tell cargo to invalidate the built crate whenever the wrapper changes
     println!("cargo:rerun-if-changed={}", header_name);
