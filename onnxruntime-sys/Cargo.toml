@@ -32,7 +32,6 @@ tar = "0.4"
 default = []
 
 directml = []
-coreml = []
 
 # Disable build script, used to prevent issues with docs.rs
 disable-sys-build-script = []
