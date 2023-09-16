@@ -53,7 +53,6 @@ jobs:
           - os: macos-latest
             triple: x86_64-apple-ios
             additional_features: coreml
-
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
