@@ -620,6 +620,39 @@ impl<'a> From<CudaProviderOptions<'a>> for sys::OrtCUDAProviderOptions {
     }
 }
 
+#[cfg(feature = "coreml")]
+mod coreml {
+    /// Session CoreMlProviderOptions
+    #[derive(Default)]
+    pub struct CoreMlProviderOptions<'a> {
+        /// cpu_only
+        pub cpu_only: bool,
+        /// enable_on_subgraph
+        pub enable_on_subgraph: bool,
+        /// only_enable_device_with_ane
+        pub only_enable_device_with_ane: bool,
+    }
+
+    impl<'a> From<CoreMlProviderOptions<'a>> for u32 {
+        fn from(options: CudaProviderOptions) -> Self {
+            let mut val = sys::COREMLFlags::COREML_FLAG_USE_NONE;
+            if options.cpu_only {
+                val |= sys::COREMLFlags::COREML_FLAG_USE_CPU_ONLY;
+            }
+            if options.enable_on_subgraph {
+                val |= sys::COREMLFlags::COREML_FLAG_ENABLE_ON_SUBGRAPH;
+            }
+            if options.only_enable_device_with_ane {
+                val |= sys::COREMLFlags::COREML_FLAG_ONLY_ENABLE_DEVICE_WITH_ANE;
+            }
+            val
+        }
+    }
+}
+
+#[cfg(feature = "coreml")]
+pub use coreml::*;
+
 /// Session CudnnConvAlgoSearch
 #[repr(i32)]
 pub enum CudnnConvAlgoSearch {

@@ -360,6 +360,31 @@ mod directml {
 #[cfg(feature = "directml")]
 pub use self::directml::*;
 
+#[cfg(feature = "coreml")]
+mod coreml {
+    use super::*;
+    use crate::CoreMlProviderOptions;
+
+    impl<'a> SessionBuilder<'a> {
+        pub fn with_append_execution_provider_coreml(
+            self,
+            coreml_provider_options: CoreMlProviderOptions,
+        ) -> Result<SessionBuilder<'a>> {
+            let status = unsafe {
+                sys::OrtSessionOptionsAppendExecutionProvider_CoreML(
+                    self.session_options_ptr,
+                    device_id as _,
+                )
+            };
+            status_to_result(status).map_err(OrtError::SessionOptions)?;
+            Ok(self)
+        }
+    }
+}
+
+#[cfg(feature = "coreml")]
+pub use self::coreml::*;
+
 /// Type storing the session information, built from an [`Environment`](environment/struct.Environment.html)
 #[derive(Debug)]
 pub struct Session<'a> {
