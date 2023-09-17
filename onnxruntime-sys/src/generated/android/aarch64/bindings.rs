@@ -7442,21 +7442,3 @@ extern "C" {
         device_id: ::std::os::raw::c_int,
     ) -> OrtStatusPtr;
 }
-impl NNAPIFlags {
-    pub const NNAPI_FLAG_LAST: NNAPIFlags = NNAPIFlags::NNAPI_FLAG_CPU_ONLY;
-}
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum NNAPIFlags {
-    NNAPI_FLAG_USE_NONE = 0,
-    NNAPI_FLAG_USE_FP16 = 1,
-    NNAPI_FLAG_USE_NCHW = 2,
-    NNAPI_FLAG_CPU_DISABLED = 4,
-    NNAPI_FLAG_CPU_ONLY = 8,
-}
-extern "C" {
-    pub fn OrtSessionOptionsAppendExecutionProvider_Nnapi(
-        options: *mut OrtSessionOptions,
-        nnapi_flags: u32,
-    ) -> OrtStatusPtr;
-}
