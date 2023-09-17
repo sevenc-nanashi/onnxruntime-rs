@@ -32,6 +32,7 @@ tar = "0.4"
 default = []
 
 directml = []
+nnapi = []
 
 # Disable build script, used to prevent issues with docs.rs
 disable-sys-build-script = []

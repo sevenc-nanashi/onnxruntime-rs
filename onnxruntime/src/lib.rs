@@ -642,6 +642,45 @@ impl From<CudnnConvAlgoSearch> for sys::OrtCudnnConvAlgoSearch {
     }
 }
 
+#[cfg(feature = "nnapi")]
+mod nnapi {
+    use crate::sys;
+    /// Setting for NNAPI EP
+    #[derive(Default, Copy, Clone)]
+    pub struct NnapiProviderOptions {
+        /// use_fp16
+        pub use_fp16: bool,
+        /// use_nchw
+        pub use_nchw: bool,
+        /// cpu_disabled
+        pub cpu_disabled: bool,
+        /// cpu_only
+        pub cpu_only: bool,
+    }
+
+    impl From<NnapiProviderOptions> for u32 {
+        fn from(value: NnapiProviderOptions) -> Self {
+            let mut ret: u32 = 0;
+            if value.use_fp16 {
+                ret |= sys::NNAPIFlags::NNAPI_FLAG_USE_FP16 as u32;
+            }
+            if value.use_nchw {
+                ret |= sys::NNAPIFlags::NNAPI_FLAG_USE_NCHW as u32;
+            }
+            if value.cpu_disabled {
+                ret |= sys::NNAPIFlags::NNAPI_FLAG_CPU_DISABLED as u32;
+            }
+            if value.cpu_only {
+                ret |= sys::NNAPIFlags::NNAPI_FLAG_CPU_ONLY as u32;
+            }
+            ret
+        }
+    }
+}
+
+#[cfg(feature = "nnapi")]
+pub use nnapi::*;
+
 /// Onnxruntime Arena config
 pub type ArenaCfg = sys::OrtArenaCfg;
 impl Default for CudnnConvAlgoSearch {

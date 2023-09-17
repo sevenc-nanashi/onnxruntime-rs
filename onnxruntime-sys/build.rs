@@ -204,10 +204,13 @@ fn generate_bindings(include_dir: &Path) {
         format!("-D{}", "USE_DML"),
     ];
 
-    #[cfg(not(feature = "directml"))]
-    let header_name = "wrapper.h";
-    #[cfg(feature = "directml")]
-    let header_name = "wrapper_directml.h";
+    let header_name = if cfg!(feature = "directml") {
+        "wrapper_directml.h"
+    } else if cfg!(feature = "nnapi") {
+        "wrapper_nnapi.h"
+    } else {
+        "wrapper.h"
+    };
 
     // Tell cargo to invalidate the built crate whenever the wrapper changes
     println!("cargo:rerun-if-changed={}", header_name);
@@ -247,10 +250,13 @@ fn generate_bindings(include_dir: &Path) {
         .join("generated")
         .join(env::var("CARGO_CFG_TARGET_OS").unwrap())
         .join(env::var("CARGO_CFG_TARGET_ARCH").unwrap());
-    #[cfg(not(feature = "directml"))]
-    let generated_file = generated_file.join("bindings.rs");
-    #[cfg(feature = "directml")]
-    let generated_file = generated_file.join("bindings_directml.rs");
+    let generated_file = if cfg!(feature = "directml") {
+        generated_file.join("bindings_directml.rs")
+    } else if cfg!(feature = "nnapi") {
+        generated_file.join("bindings_nnapi.rs")
+    } else {
+        generated_file.join("bindings.rs")
+    };
     println!("cargo:rerun-if-changed={:?}", generated_file);
     bindings
         .write_to_file(&generated_file)

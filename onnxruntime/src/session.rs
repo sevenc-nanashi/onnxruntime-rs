@@ -360,6 +360,31 @@ mod directml {
 #[cfg(feature = "directml")]
 pub use self::directml::*;
 
+#[cfg(feature = "nnapi")]
+mod nnapi {
+    use super::*;
+    use crate::NnapiProviderOptions;
+
+    impl<'a> SessionBuilder<'a> {
+        pub fn with_append_execution_provider_nnapi(
+            self,
+            nnapi_provider_options: &NnapiProviderOptions,
+        ) -> Result<SessionBuilder<'a>> {
+            let status = unsafe {
+                sys::OrtSessionOptionsAppendExecutionProvider_Nnapi(
+                    self.session_options_ptr,
+                    (*nnapi_provider_options).into(),
+                )
+            };
+            status_to_result(status).map_err(OrtError::SessionOptions)?;
+            Ok(self)
+        }
+    }
+}
+
+#[cfg(feature = "nnapi")]
+pub use self::nnapi::*;
+
 /// Type storing the session information, built from an [`Environment`](environment/struct.Environment.html)
 #[derive(Debug)]
 pub struct Session<'a> {
