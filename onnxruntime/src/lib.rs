@@ -622,9 +622,11 @@ impl<'a> From<CudaProviderOptions<'a>> for sys::OrtCUDAProviderOptions {
 
 #[cfg(feature = "coreml")]
 mod coreml {
+    use super::*;
+
     /// Session CoreMlProviderOptions
     #[derive(Default)]
-    pub struct CoreMlProviderOptions<'a> {
+    pub struct CoreMlProviderOptions {
         /// cpu_only
         pub cpu_only: bool,
         /// enable_on_subgraph
@@ -633,7 +635,7 @@ mod coreml {
         pub only_enable_device_with_ane: bool,
     }
 
-    impl<'a> From<CoreMlProviderOptions<'a>> for u32 {
+    impl<'a> From<CoreMlProviderOptions> for u32 {
         fn from(options: CudaProviderOptions) -> Self {
             let mut val = sys::COREMLFlags::COREML_FLAG_USE_NONE;
             if options.cpu_only {
