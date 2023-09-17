@@ -363,12 +363,12 @@ pub use self::directml::*;
 #[cfg(feature = "coreml")]
 mod coreml {
     use super::*;
-    use crate::CoreMlProviderOptions;
+    use crate::CoreMLProviderOptions;
 
     impl<'a> SessionBuilder<'a> {
         pub fn with_append_execution_provider_coreml(
             self,
-            coreml_provider_options: CoreMlProviderOptions,
+            coreml_provider_options: CoreMLProviderOptions,
         ) -> Result<SessionBuilder<'a>> {
             let status = unsafe {
                 sys::OrtSessionOptionsAppendExecutionProvider_CoreML(
