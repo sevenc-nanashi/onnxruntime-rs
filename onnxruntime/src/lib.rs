@@ -637,15 +637,15 @@ mod coreml {
 
     impl<'a> From<CoreMlProviderOptions> for u32 {
         fn from(options: CoreMlProviderOptions) -> Self {
-            let mut val: u32 = sys::COREMLFlags::COREML_FLAG_USE_NONE;
+            let mut val = sys::COREMLFlags::COREML_FLAG_USE_NONE as u32;
             if options.cpu_only {
-                val |= sys::COREMLFlags::COREML_FLAG_USE_CPU_ONLY;
+                val |= sys::COREMLFlags::COREML_FLAG_USE_CPU_ONLY as u32;
             }
             if options.enable_on_subgraph {
-                val |= sys::COREMLFlags::COREML_FLAG_ENABLE_ON_SUBGRAPH;
+                val |= sys::COREMLFlags::COREML_FLAG_ENABLE_ON_SUBGRAPH as u32;
             }
             if options.only_enable_device_with_ane {
-                val |= sys::COREMLFlags::COREML_FLAG_ONLY_ENABLE_DEVICE_WITH_ANE;
+                val |= sys::COREMLFlags::COREML_FLAG_ONLY_ENABLE_DEVICE_WITH_ANE as u32;
             }
             val
         }
