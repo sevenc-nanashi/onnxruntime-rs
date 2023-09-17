@@ -373,7 +373,7 @@ mod coreml {
             let status = unsafe {
                 sys::OrtSessionOptionsAppendExecutionProvider_CoreML(
                     self.session_options_ptr,
-                    device_id as _,
+                    coreml_provider_options as _,
                 )
             };
             status_to_result(status).map_err(OrtError::SessionOptions)?;

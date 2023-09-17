@@ -636,8 +636,8 @@ mod coreml {
     }
 
     impl<'a> From<CoreMlProviderOptions> for u32 {
-        fn from(options: CudaProviderOptions) -> Self {
-            let mut val = sys::COREMLFlags::COREML_FLAG_USE_NONE;
+        fn from(options: CoreMlProviderOptions) -> Self {
+            let mut val: u32 = sys::COREMLFlags::COREML_FLAG_USE_NONE;
             if options.cpu_only {
                 val |= sys::COREMLFlags::COREML_FLAG_USE_CPU_ONLY;
             }
