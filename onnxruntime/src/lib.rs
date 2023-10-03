@@ -615,7 +615,7 @@ impl<'a> From<CudaProviderOptions<'a>> for sys::OrtCUDAProviderOptions {
             } else {
                 null_mut()
             },
-            tunable_op_enabled: options.tunable_op_enabled,
+            tunable_op_enabled: options.tunable_op_enable,
         }
     }
 }
