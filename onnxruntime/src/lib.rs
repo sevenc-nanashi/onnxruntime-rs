@@ -592,6 +592,11 @@ pub struct CudaProviderOptions<'a> {
     pub default_memory_arena_cfg: Option<&'a mut ArenaCfg>,
     /// tunable_op_enabled
     pub tunable_op_enabled: i32,
+    /// tunable_op_tuning_enable
+    pub tunable_op_tuning_enable: i32,
+    /// tunable_op_max_tuning_duration_ms
+    pub ‎tunable_op_max_tuning_duration_ms‎: i32,
+    
 }
 
 impl<'a> From<CudaProviderOptions<'a>> for sys::OrtCUDAProviderOptions {
@@ -616,6 +621,8 @@ impl<'a> From<CudaProviderOptions<'a>> for sys::OrtCUDAProviderOptions {
                 null_mut()
             },
             tunable_op_enable: options.tunable_op_enabled,
+            tunable_op_tuning_enable: 0,
+            tunable_op_max_tuning_duration_ms: 0,
         }
     }
 }
